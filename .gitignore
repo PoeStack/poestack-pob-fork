@@ -31,3 +31,8 @@ src/Export/ggpk/*.dll
 # PoB Trader
 *_currency_values.json
 
+get-passive-skills.json
+
+data/*.txt
+data/*.json
+data/*.xml
