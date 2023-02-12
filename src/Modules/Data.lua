@@ -55,16 +55,19 @@ local function makeSkillMod(modName, modType, modVal, flags, keywordFlags, ...)
 		...
 	}
 end
+
 local function makeFlagMod(modName, ...)
 	return makeSkillMod(modName, "FLAG", true, 0, 0, ...)
 end
+
 local function makeSkillDataMod(dataKey, dataValue, ...)
 	return makeSkillMod("SkillData", "LIST", { key = dataKey, value = dataValue }, 0, 0, ...)
 end
+
 local function processMod(grantedEffect, mod)
 	mod.source = grantedEffect.modSource
 	if type(mod.value) == "table" and mod.value.mod then
-		mod.value.mod.source = "Skill:"..grantedEffect.id
+		mod.value.mod.source = "Skill:" .. grantedEffect.id
 	end
 	for _, tag in ipairs(mod) do
 		if tag.type == "GlobalEffect" then
@@ -78,58 +81,59 @@ end
 -- Common Data --
 -----------------
 
-data = { }
+data = {}
 
 data.powerStatList = {
-	{ stat=nil, label="Offence/Defence", combinedOffDef=true, ignoreForItems=true },
-	{ stat=nil, label="Name", itemField="Name", ignoreForNodes=true, reverseSort=true, transform=function(value) return value:gsub("^The ","") end},
-	{ stat="FullDPS", label="Full DPS" },
-	{ stat="CombinedDPS", label="Combined DPS" },
-	{ stat="TotalDPS", label="Hit DPS" },
-	{ stat="WithImpaleDPS", label="Impale + Hit DPS" },
-	{ stat="AverageDamage", label="Average Hit" },
-	{ stat="Speed", label="Attack/Cast Speed" },
-	{ stat="TotalDot", label="DoT DPS" },
-	{ stat="BleedDPS", label="Bleed DPS" },
-	{ stat="IgniteDPS", label="Ignite DPS" },
-	{ stat="PoisonDPS", label="Poison DPS" },
-	{ stat="Life", label="Life" },
-	{ stat="LifeRegen", label="Life regen" },
-	{ stat="LifeLeechRate", label="Life leech" },
-	{ stat="Armour", label="Armour" },
-	{ stat="Evasion", label="Evasion" },
-	{ stat="EnergyShield", label="Energy Shield" },
-	{ stat="EnergyShieldRecoveryCap", label="Recoverable ES" },
-	{ stat="EnergyShieldRegen", label="Energy Shield regen" },
-	{ stat="EnergyShieldLeechRate", label="Energy Shield leech" },
-	{ stat="Mana", label="Mana" },
-	{ stat="ManaRegen", label="Mana regen" },
-	{ stat="ManaLeechRate", label="Mana leech" },
-	{ stat="Ward", label="Ward" },
-	{ stat="Str", label="Strength" },
-	{ stat="Dex", label="Dexterity" },
-	{ stat="Int", label="Intelligence" },
-	{ stat="TotalAttr", label="Total Attributes" },
-	{ stat="MeleeAvoidChance", label="Melee avoid chance" },
-	{ stat="SpellAvoidChance", label="Spell avoid chance" },
-	{ stat="ProjectileAvoidChance", label="Projectile avoid chance" },
-	{ stat="TotalEHP", label="Effective Hit Pool" },
-	{ stat="SecondMinimalMaximumHitTaken", label="Eff. Maximum Hit Taken" },
-	{ stat="PhysicalTakenHitMult", label="Taken Phys dmg", transform=function(value) return 1-value end },
-	{ stat="LightningTakenDotMult", label="Taken Lightning dmg", transform=function(value) return 1-value end },
-	{ stat="ColdTakenDotMult", label="Taken Cold dmg", transform=function(value) return 1-value end },
-	{ stat="FireTakenDotMult", label="Taken Fire dmg", transform=function(value) return 1-value end },
-	{ stat="ChaosTakenHitMult", label="Taken Chaos dmg", transform=function(value) return 1-value end },
-	{ stat="CritChance", label="Crit Chance" },
-	{ stat="CritMultiplier", label="Crit Multiplier" },
-	{ stat="BleedChance", label="Bleed Chance" },
-	{ stat="FreezeChance", label="Freeze Chance" },
-	{ stat="IgniteChance", label="Ignite Chance" },
-	{ stat="ShockChance", label="Shock Chance" },
-	{ stat="EffectiveMovementSpeedMod", label="Move speed" },
-	{ stat="BlockChance", label="Block Chance" },
-	{ stat="SpellBlockChance", label="Spell Block Chance" },
-	{ stat="SpellSuppressionChance", label="Spell Suppression Chance" },
+	{ stat = nil, label = "Offence/Defence", combinedOffDef = true, ignoreForItems = true },
+	{ stat = nil, label = "Name", itemField = "Name", ignoreForNodes = true, reverseSort = true,
+		transform = function(value) return value:gsub("^The ", "") end },
+	{ stat = "FullDPS", label = "Full DPS" },
+	{ stat = "CombinedDPS", label = "Combined DPS" },
+	{ stat = "TotalDPS", label = "Hit DPS" },
+	{ stat = "WithImpaleDPS", label = "Impale + Hit DPS" },
+	{ stat = "AverageDamage", label = "Average Hit" },
+	{ stat = "Speed", label = "Attack/Cast Speed" },
+	{ stat = "TotalDot", label = "DoT DPS" },
+	{ stat = "BleedDPS", label = "Bleed DPS" },
+	{ stat = "IgniteDPS", label = "Ignite DPS" },
+	{ stat = "PoisonDPS", label = "Poison DPS" },
+	{ stat = "Life", label = "Life" },
+	{ stat = "LifeRegen", label = "Life regen" },
+	{ stat = "LifeLeechRate", label = "Life leech" },
+	{ stat = "Armour", label = "Armour" },
+	{ stat = "Evasion", label = "Evasion" },
+	{ stat = "EnergyShield", label = "Energy Shield" },
+	{ stat = "EnergyShieldRecoveryCap", label = "Recoverable ES" },
+	{ stat = "EnergyShieldRegen", label = "Energy Shield regen" },
+	{ stat = "EnergyShieldLeechRate", label = "Energy Shield leech" },
+	{ stat = "Mana", label = "Mana" },
+	{ stat = "ManaRegen", label = "Mana regen" },
+	{ stat = "ManaLeechRate", label = "Mana leech" },
+	{ stat = "Ward", label = "Ward" },
+	{ stat = "Str", label = "Strength" },
+	{ stat = "Dex", label = "Dexterity" },
+	{ stat = "Int", label = "Intelligence" },
+	{ stat = "TotalAttr", label = "Total Attributes" },
+	{ stat = "MeleeAvoidChance", label = "Melee avoid chance" },
+	{ stat = "SpellAvoidChance", label = "Spell avoid chance" },
+	{ stat = "ProjectileAvoidChance", label = "Projectile avoid chance" },
+	{ stat = "TotalEHP", label = "Effective Hit Pool" },
+	{ stat = "SecondMinimalMaximumHitTaken", label = "Eff. Maximum Hit Taken" },
+	{ stat = "PhysicalTakenHitMult", label = "Taken Phys dmg", transform = function(value) return 1 - value end },
+	{ stat = "LightningTakenDotMult", label = "Taken Lightning dmg", transform = function(value) return 1 - value end },
+	{ stat = "ColdTakenDotMult", label = "Taken Cold dmg", transform = function(value) return 1 - value end },
+	{ stat = "FireTakenDotMult", label = "Taken Fire dmg", transform = function(value) return 1 - value end },
+	{ stat = "ChaosTakenHitMult", label = "Taken Chaos dmg", transform = function(value) return 1 - value end },
+	{ stat = "CritChance", label = "Crit Chance" },
+	{ stat = "CritMultiplier", label = "Crit Multiplier" },
+	{ stat = "BleedChance", label = "Bleed Chance" },
+	{ stat = "FreezeChance", label = "Freeze Chance" },
+	{ stat = "IgniteChance", label = "Ignite Chance" },
+	{ stat = "ShockChance", label = "Shock Chance" },
+	{ stat = "EffectiveMovementSpeedMod", label = "Move speed" },
+	{ stat = "BlockChance", label = "Block Chance" },
+	{ stat = "SpellBlockChance", label = "Spell Block Chance" },
+	{ stat = "SpellSuppressionChance", label = "Spell Suppression Chance" },
 }
 
 data.skillColorMap = { colorCodes.STRENGTH, colorCodes.DEXTERITY, colorCodes.INTELLIGENCE, colorCodes.NORMAL }
@@ -503,15 +507,15 @@ data.bossSkills = {
 		speed = 2500 * 10
 	},
 	["Shaper Ball"] = {
-		damageMult =  9.17,
+		damageMult = 9.17,
 		speed = 1400
 	},
 	["Shaper Slam"] = {
-		damageMult =  15.2,
+		damageMult = 15.2,
 		speed = 3510
 	},
 	["Maven Memory Game"] = {
-		damageMult =  24.69
+		damageMult = 24.69
 	}
 }
 
@@ -544,7 +548,7 @@ data.veiledMods = LoadModule("Data/ModVeiled")
 data.pantheons = LoadModule("Data/Pantheons")
 data.costs = LoadModule("Data/Costs")
 do
-	local map = { }
+	local map = {}
 	for i, value in ipairs(data.costs) do
 		map[value.Resource] = i
 	end
@@ -556,7 +560,7 @@ data.clusterJewels = LoadModule("Data/ClusterJewels")
 
 -- Create a quick lookup cache from cluster jewel skill to the notables which use that skill
 ---@type table<string, table<string>>
-local clusterSkillToNotables = { }
+local clusterSkillToNotables = {}
 for notableKey, notableInfo in pairs(data.itemMods.JewelCluster) do
 	-- Translate the notable key to its name
 	local notableName = notableInfo[1] and notableInfo[1]:match("1 Added Passive Skill is (.*)")
@@ -564,7 +568,7 @@ for notableKey, notableInfo in pairs(data.itemMods.JewelCluster) do
 		for weightIndex, clusterSkill in pairs(notableInfo.weightKey) do
 			if notableInfo.weightVal[weightIndex] > 0 then
 				if not clusterSkillToNotables[clusterSkill] then
-					clusterSkillToNotables[clusterSkill] = { }
+					clusterSkillToNotables[clusterSkill] = {}
 				end
 				table.insert(clusterSkillToNotables[clusterSkill], notableName)
 			end
@@ -573,16 +577,16 @@ for notableKey, notableInfo in pairs(data.itemMods.JewelCluster) do
 end
 
 -- Create easy lookup from cluster node name -> cluster jewel size and types
-data.clusterJewelInfoForNotable = { }
+data.clusterJewelInfoForNotable = {}
 for size, jewel in pairs(data.clusterJewels.jewels) do
 	for skill, skillInfo in pairs(jewel.skills) do
 		local notables = clusterSkillToNotables[skill]
 		if notables then
 			for _, notableKey in ipairs(notables) do
 				if not data.clusterJewelInfoForNotable[notableKey] then
-					data.clusterJewelInfoForNotable[notableKey] = { }
-					data.clusterJewelInfoForNotable[notableKey].jewelTypes = { }
-					data.clusterJewelInfoForNotable[notableKey].size = { }
+					data.clusterJewelInfoForNotable[notableKey] = {}
+					data.clusterJewelInfoForNotable[notableKey].jewelTypes = {}
+					data.clusterJewelInfoForNotable[notableKey].size = {}
 				end
 				local curJewelInfo = data.clusterJewelInfoForNotable[notableKey]
 				curJewelInfo.size[size] = true
@@ -595,55 +599,22 @@ end
 -- Load legion jewel data
 
 local function loadJewelFile(jewelTypeName)
-	jewelTypeName = "/Data/TimelessJewelData/" .. jewelTypeName
+	jewelTypeName = "Data/TimelessJewelData/" .. jewelTypeName
 	local jewelData
 
 	local scriptPath = GetScriptPath()
 
-	local fileHandle = NewFileSearch(scriptPath .. jewelTypeName .. ".bin")
-	local uncompressedFileAttr = { }
-	if fileHandle then
-		uncompressedFileAttr.fileName = fileHandle:GetFileName()
-		uncompressedFileAttr.modified = fileHandle:GetFileModifiedTime()
+	local uncompressedFile = io.open(scriptPath .. jewelTypeName .. ".bin", "rb")
+	if uncompressedFile then
+		jewelData = uncompressedFile:read("*a")
+		uncompressedFile:close()
+	end
+	if jewelData then
+		return jewelData
 	end
 
-	fileHandle = NewFileSearch(scriptPath .. jewelTypeName .. ".zip")
-	local compressedFileAttr = { }
-	if fileHandle then
-		compressedFileAttr.fileName = fileHandle:GetFileName()
-		compressedFileAttr.modified = fileHandle:GetFileModifiedTime()
-	end
-
-	fileHandle = NewFileSearch(scriptPath .. jewelTypeName .. ".zip.part*")
-	local splitFile = { }
-	if fileHandle then
-		compressedFileAttr.modified = fileHandle:GetFileModifiedTime()
-	end
-	while fileHandle do
-		local fileName = fileHandle:GetFileName()
-		local file = io.open(scriptPath .. "/Data/TimelessJewelData/" .. fileName, "rb")
-		local part = tonumber(fileName:match("%.part(%d)")) or 0
-		splitFile[part + 1] = file:read("*a")
-		file:close()
-		if not fileHandle:NextFile() then
-			break
-		end
-	end
-	splitFile = t_concat(splitFile, "")
-
-	if uncompressedFileAttr.modified and uncompressedFileAttr.modified > (compressedFileAttr.modified or 0) then
-		ConPrintf("Uncompressed jewel data is up-to-date, loading " .. uncompressedFileAttr.fileName)
-		local uncompressedFile = io.open(scriptPath .. jewelTypeName .. ".bin", "rb")
-		if uncompressedFile then
-			jewelData = uncompressedFile:read("*a")
-			uncompressedFile:close()
-		end
-		if jewelData then
-			return jewelData
-		end
-	end
-
-	ConPrintf("Failed to load " .. scriptPath .. jewelTypeName .. ".bin, or data is out of date, falling back to compressed file")
+	ConPrintf("Failed to load " ..
+		scriptPath .. jewelTypeName .. ".bin, or data is out of date, falling back to compressed file")
 	local compressedFile = io.open(scriptPath .. jewelTypeName .. ".zip", "rb")
 	if compressedFile then
 		jewelData = Inflate(compressedFile:read("*a"))
@@ -657,7 +628,8 @@ local function loadJewelFile(jewelTypeName)
 		if (data.nodeIDList[1] and (data.nodeIDList[1].rebuildLUT or 0) or 0) == 1 then
 			ConPrintf("looking for base LUT to rebuild")
 			local jewelType = 1
-			while ("/Data/TimelessJewelData/" .. data.timelessJewelTypes[jewelType]:gsub("%s+", "")) ~= jewelTypeName and jewelType < 5 do
+			while ("/Data/TimelessJewelData/" .. data.timelessJewelTypes[jewelType]:gsub("%s+", "")) ~= jewelTypeName and
+				jewelType < 5 do
 				jewelType = jewelType + 1
 			end
 			local compressedFile = io.open(scriptPath .. "/Data/TimelessJewelData/" .. data.timelessJewelTypes[jewelType], "rb")
@@ -699,13 +671,15 @@ local function loadTimelessJewel(jewelType, nodeID)
 		return
 	end
 	-- if LUT is already loaded, and this either isn't GV, or GV has already emptied it's raw data out, return
-	if data.timelessJewelLUTs[jewelType] and data.timelessJewelLUTs[jewelType].data and (jewelType ~= 1 or data.timelessJewelLUTs[jewelType].data[nodeIndex + 1].raw == nil) then
+	if data.timelessJewelLUTs[jewelType] and data.timelessJewelLUTs[jewelType].data and
+		(jewelType ~= 1 or data.timelessJewelLUTs[jewelType].data[nodeIndex + 1].raw == nil) then
 		return
 	end
 
 	if jewelType == 1 then
 		-- if data is already loaded but table for specific node is not created, just make table and return
-		if data.timelessJewelLUTs[jewelType] and data.timelessJewelLUTs[jewelType].data[nodeIndex + 1] and data.timelessJewelLUTs[jewelType].data[nodeIndex + 1].raw then
+		if data.timelessJewelLUTs[jewelType] and data.timelessJewelLUTs[jewelType].data[nodeIndex + 1] and
+			data.timelessJewelLUTs[jewelType].data[nodeIndex + 1].raw then
 			local jewelData = data.timelessJewelLUTs[jewelType].data[nodeIndex + 1].raw
 			local seedSize = data.timelessJewelSeedMax[1] - data.timelessJewelSeedMin[1] + 1
 			local count = 0
@@ -717,9 +691,9 @@ local function loadTimelessJewel(jewelType, nodeID)
 			data.timelessJewelLUTs[jewelType].data[nodeIndex + 1].raw = nil
 			return
 		end
-		data.timelessJewelLUTs[jewelType] = { data = { } }
+		data.timelessJewelLUTs[jewelType] = { data = {} }
 	else
-		data.timelessJewelLUTs[jewelType] = { }
+		data.timelessJewelLUTs[jewelType] = {}
 	end
 
 	ConPrintf("LOADING")
@@ -754,7 +728,8 @@ local function loadTimelessJewel(jewelType, nodeID)
 					local seedOffset = 0
 					for seedKey = 1, (seedSize + 1) do
 						local dataLength = data.timelessJewelLUTs[jewelType].sizes:byte(nodeIndex * seedSize + seedKey)
-						data.timelessJewelLUTs[jewelType].data[nodeIndex + 1][seedKey] = jewelData2:sub(seedOffset + 1, seedOffset + dataLength)
+						data.timelessJewelLUTs[jewelType].data[nodeIndex + 1][seedKey] = jewelData2:sub(seedOffset + 1,
+							seedOffset + dataLength)
 						seedOffset = seedOffset + dataLength
 					end
 					data.timelessJewelLUTs[jewelType].data[i].raw = nil
@@ -791,13 +766,13 @@ data.timelessJewelSeedMax = {
 }
 data.timelessJewelAdditions = 94 -- #legionAdditions
 data.nodeIDList = LoadModule("Data/TimelessJewelData/NodeIndexMapping")
-data.timelessJewelLUTs = { }
+data.timelessJewelLUTs = {}
 -- this runs if the "size" key is missing from nodeIDList and attempts to rebuild all jewel LUTs and the nodeIDList
 -- note this should only run in dev mode
 if not data.nodeIDList.size and launch.devMode then -- this doesn't rebuilt the list with the correct sizes, likely an issue with lua indexing from 1 instead of 0, but cbf debugging so just generated the index mapping in c#
 	ConPrintf("Error NodeIndexMapping file empty")
 	data.nodeIDList = { { index = 0, rebuildLUT = 1 } }
-	for _, jewelType in ipairs({2, 3, 4, 5}) do
+	for _, jewelType in ipairs({ 2, 3, 4, 5 }) do
 		loadTimelessJewel(jewelType, 1)
 		data.nodeIDList[1].rebuildLUT = 1
 	end
@@ -812,7 +787,7 @@ if not data.nodeIDList.size and launch.devMode then -- this doesn't rebuilt the 
 			ConPrintf("csv found")
 			local nodeData = compressedFile:read("*a")
 			compressedFile:close()
-			
+
 			tempIndList = {}
 			nodeIDList["size"] = 0
 			nodeIDList["sizeNotable"] = 0
@@ -833,8 +808,8 @@ if not data.nodeIDList.size and launch.devMode then -- this doesn't rebuilt the 
 			nodeIDList["size"] = nodeIDList["size"] - 2
 			ConPrintf(nodeIDList["sizeNotable"])
 			ConPrintf(nodeIDList["size"])
-			
-			
+
+
 			local seedSize = data.timelessJewelSeedMax[1] - data.timelessJewelSeedMin[1] + 1
 			local sizeOffset = nodeIDList.size * seedSize
 			data.timelessJewelLUTs[1] = {}
@@ -852,13 +827,15 @@ if not data.nodeIDList.size and launch.devMode then -- this doesn't rebuilt the 
 				end
 				nodeIDList[nodeID] = { index = nodeIndex, size = count }
 			end
-			
+
 			local file = assert(io.open("Data/TimelessJewelData/NodeIndexMapping.lua", "wb+"))
 			file:write("nodeIDList = { }\n")
 			file:write("nodeIDList[\"size\"] = " .. tostring(nodeIDList["size"]) .. "\n")
 			file:write("nodeIDList[\"sizeNotable\"] = " .. tostring(nodeIDList["sizeNotable"]) .. "\n")
 			for _, nodeID in ipairs(tempIndList) do
-				file:write("nodeIDList[" .. tostring(nodeID) .. "] = { index = " .. tostring(nodeIDList[nodeID].index) .. ", size = " .. tostring(nodeIDList[nodeID].size) .. " }\n")
+				file:write("nodeIDList[" ..
+					tostring(nodeID) ..
+					"] = { index = " .. tostring(nodeIDList[nodeID].index) .. ", size = " .. tostring(nodeIDList[nodeID].size) .. " }\n")
 			end
 			file:write("return nodeIDList")
 			file:close()
@@ -881,8 +858,8 @@ data.readLUT = function(seed, nodeID, jewelType)
 	local seedSize = (data.timelessJewelSeedMax[jewelType] - data.timelessJewelSeedMin[jewelType]) + 1
 	local index = data.nodeIDList[nodeID] and data.nodeIDList[nodeID].index or nil
 	if index then
-		if jewelType == 1 then  -- "Glorious Vanity"
-			local result = { }
+		if jewelType == 1 then -- "Glorious Vanity"
+			local result = {}
 
 			for i = 1, data.timelessJewelLUTs[jewelType].sizes:byte(index * seedSize + seedOffset + 1) do
 				result[i] = data.timelessJewelLUTs[jewelType].data[index + 1][seedOffset + 1]:byte(i)
@@ -892,13 +869,13 @@ data.readLUT = function(seed, nodeID, jewelType)
 			return { data.timelessJewelLUTs[jewelType].data:byte(index * seedSize + seedOffset + 1) }
 		end
 	else
-		ConPrintf("ERROR: Missing Index lookup for nodeID: "..nodeID)
+		ConPrintf("ERROR: Missing Index lookup for nodeID: " .. nodeID)
 	end
-	return { }
+	return {}
 end
 
 -- Load skills
-data.skills = { }
+data.skills = {}
 data.skillStatMap = LoadModule("Data/SkillStatMap", makeSkillMod, makeFlagMod, makeSkillDataMod)
 data.skillStatMapMeta = {
 	__index = function(t, key)
@@ -914,13 +891,13 @@ data.skillStatMapMeta = {
 	end
 }
 for _, type in pairs(skillTypes) do
-	LoadModule("Data/Skills/"..type, data.skills, makeSkillMod, makeFlagMod, makeSkillDataMod)
+	LoadModule("Data/Skills/" .. type, data.skills, makeSkillMod, makeFlagMod, makeSkillDataMod)
 end
 for skillId, grantedEffect in pairs(data.skills) do
 	grantedEffect.id = skillId
-	grantedEffect.modSource = "Skill:"..skillId
+	grantedEffect.modSource = "Skill:" .. skillId
 	-- Add sources for skill mods, and check for global effects
-	for _, list in pairs({grantedEffect.baseMods, grantedEffect.qualityMods, grantedEffect.levelMods}) do
+	for _, list in pairs({ grantedEffect.baseMods, grantedEffect.qualityMods, grantedEffect.levelMods }) do
 		for _, mod in pairs(list) do
 			if mod.name then
 				processMod(grantedEffect, mod)
@@ -932,7 +909,7 @@ for skillId, grantedEffect in pairs(data.skills) do
 		end
 	end
 	-- Install stat map metatable
-	grantedEffect.statMap = grantedEffect.statMap or { }
+	grantedEffect.statMap = grantedEffect.statMap or {}
 	setmetatable(grantedEffect.statMap, data.skillStatMapMeta)
 	grantedEffect.statMap._grantedEffect = grantedEffect
 	for _, map in pairs(grantedEffect.statMap) do
@@ -944,8 +921,8 @@ end
 
 -- Load gems
 data.gems = LoadModule("Data/Gems")
-data.gemForSkill = { }
-data.gemForBaseName = { }
+data.gemForSkill = {}
+data.gemForBaseName = {}
 for gemId, gem in pairs(data.gems) do
 	gem.id = gemId
 	gem.grantedEffect = data.skills[gem.grantedEffectId]
@@ -960,19 +937,20 @@ for gemId, gem in pairs(data.gems) do
 		gem.grantedEffect,
 		gem.secondaryGrantedEffect
 	}
-	gem.defaultLevel = gem.defaultLevel or (#gem.grantedEffect.levels > 20 and #gem.grantedEffect.levels - 20) or (gem.grantedEffect.levels[3][1] and 3) or 1
+	gem.defaultLevel = gem.defaultLevel or (#gem.grantedEffect.levels > 20 and #gem.grantedEffect.levels - 20) or
+		(gem.grantedEffect.levels[3][1] and 3) or 1
 end
 
 -- Load minions
-data.minions = { }
+data.minions = {}
 LoadModule("Data/Minions", data.minions, makeSkillMod)
-data.spectres = { }
+data.spectres = {}
 LoadModule("Data/Spectres", data.spectres, makeSkillMod)
 for name, spectre in pairs(data.spectres) do
 	spectre.limit = "ActiveSpectreLimit"
 	data.minions[name] = spectre
 end
-local missing = { }
+local missing = {}
 for _, minion in pairs(data.minions) do
 	for _, skillId in ipairs(minion.skillList) do
 		if launch.devMode and not data.skills[skillId] and not missing[skillId] then
@@ -981,29 +959,29 @@ for _, minion in pairs(data.minions) do
 		end
 	end
 	for _, mod in ipairs(minion.modList) do
-		mod.source = "Minion:"..minion.name
+		mod.source = "Minion:" .. minion.name
 	end
 end
 
 -- Item bases
-data.itemBases = { }
+data.itemBases = {}
 for _, type in pairs(itemTypes) do
-	LoadModule("Data/Bases/"..type, data.itemBases)
+	LoadModule("Data/Bases/" .. type, data.itemBases)
 end
 
 -- Build lists of item bases, separated by type
-data.itemBaseLists = { }
+data.itemBaseLists = {}
 for name, base in pairs(data.itemBases) do
 	if not base.hidden then
 		local type = base.type
 		if base.subType then
 			type = type .. ": " .. base.subType
 		end
-		data.itemBaseLists[type] = data.itemBaseLists[type] or { }
-		table.insert(data.itemBaseLists[type], { label = name:gsub(" %(.+%)",""), name = name, base = base })
+		data.itemBaseLists[type] = data.itemBaseLists[type] or {}
+		table.insert(data.itemBaseLists[type], { label = name:gsub(" %(.+%)", ""), name = name, base = base })
 	end
 end
-data.itemBaseTypeList = { }
+data.itemBaseTypeList = {}
 for type, list in pairs(data.itemBaseLists) do
 	table.insert(data.itemBaseTypeList, type)
 	table.sort(list, function(a, b)
@@ -1028,15 +1006,15 @@ table.sort(data.itemBaseTypeList)
 data.rares = LoadModule("Data/Rares")
 
 -- Uniques (loaded after version-specific data because reasons)
-data.uniques = { }
+data.uniques = {}
 for _, type in pairs(itemTypes) do
-	data.uniques[type] = LoadModule("Data/Uniques/"..type)
+	data.uniques[type] = LoadModule("Data/Uniques/" .. type)
 end
 data.uniques['race'] = LoadModule("Data/Uniques/Special/race")
-data.uniqueMods = { }
-data.uniqueMods["Watcher's Eye"] = { }
+data.uniqueMods = {}
+data.uniqueMods["Watcher's Eye"] = {}
 local unsortedMods = LoadModule("Data/Uniques/Special/WatchersEye")
-local sortedMods = { }
+local sortedMods = {}
 for modId in pairs(unsortedMods) do
 	table.insert(sortedMods, modId)
 end

@@ -9,78 +9,101 @@ local b_rshift = bit.rshift
 local band = bit.band
 
 local realmList = {
-	{ label = "PC", id = "PC", realmCode = "pc", hostName = "https://www.pathofexile.com/", profileURL = "account/view-profile/" },
-	{ label = "Xbox", id = "XBOX", realmCode = "xbox", hostName = "https://www.pathofexile.com/", profileURL = "account/xbox/view-profile/" },
-	{ label = "PS4", id = "SONY", realmCode = "sony", hostName = "https://www.pathofexile.com/", profileURL = "account/sony/view-profile/" },
-	{ label = "Garena", id = "PC", realmCode = "pc", hostName = "https://web.poe.garena.tw/", profileURL = "account/view-profile/" },
-	{ label = "Tencent", id = "PC", realmCode = "pc", hostName = "https://poe.game.qq.com/", profileURL = "account/view-profile/" },
+	{ label = "PC", id = "PC", realmCode = "pc", hostName = "https://www.pathofexile.com/",
+		profileURL = "account/view-profile/" },
+	{ label = "Xbox", id = "XBOX", realmCode = "xbox", hostName = "https://www.pathofexile.com/",
+		profileURL = "account/xbox/view-profile/" },
+	{ label = "PS4", id = "SONY", realmCode = "sony", hostName = "https://www.pathofexile.com/",
+		profileURL = "account/sony/view-profile/" },
+	{ label = "Garena", id = "PC", realmCode = "pc", hostName = "https://web.poe.garena.tw/",
+		profileURL = "account/view-profile/" },
+	{ label = "Tencent", id = "PC", realmCode = "pc", hostName = "https://poe.game.qq.com/",
+		profileURL = "account/view-profile/" },
 }
 
 local influenceInfo = itemLib.influenceInfo
 
 local ImportTabClass = newClass("ImportTab", "ControlHost", "Control", function(self, build)
-	self.ControlHost()
-	self.Control()
+		self.ControlHost()
+		self.Control()
 
-	self.build = build
+		self.build = build
 
-	self.charImportMode = "GETACCOUNTNAME"
-	self.charImportStatus = "Idle"
-	self.controls.sectionCharImport = new("SectionControl", {"TOPLEFT",self,"TOPLEFT"}, 10, 18, 600, 250, "Character Import")
-	self.controls.charImportStatusLabel = new("LabelControl", {"TOPLEFT",self.controls.sectionCharImport,"TOPLEFT"}, 6, 14, 200, 16, function()
-		return "^7Character import status: "..self.charImportStatus
-	end)
-
-	-- Stage: input account name
-	self.controls.accountNameHeader = new("LabelControl", {"TOPLEFT",self.controls.sectionCharImport,"TOPLEFT"}, 6, 40, 200, 16, "^7To start importing a character, enter the character's account name:")
-	self.controls.accountNameHeader.shown = function()
-		return self.charImportMode == "GETACCOUNTNAME"
-	end
-	self.controls.accountRealm = new("DropDownControl", {"TOPLEFT",self.controls.accountNameHeader,"BOTTOMLEFT"}, 0, 4, 60, 20, realmList )
-	self.controls.accountRealm:SelByValue( main.lastRealm or "PC", "id" )
-	self.controls.accountName = new("EditControl", {"LEFT",self.controls.accountRealm,"RIGHT"}, 8, 0, 200, 20, main.lastAccountName or "", nil, "%c")
-	self.controls.accountName.pasteFilter = function(text)
-		return text:gsub("[\128-\255]",function(c)
-			return codePointToUTF8(c:byte(1)):gsub(".",function(c)
-				return string.format("%%%X", c:byte(1))
+		self.charImportMode = "GETACCOUNTNAME"
+		self.charImportStatus = "Idle"
+		self.controls.sectionCharImport = new("SectionControl", { "TOPLEFT", self, "TOPLEFT" }, 10, 18, 600, 250,
+				"Character Import")
+		self.controls.charImportStatusLabel = new("LabelControl",
+				{ "TOPLEFT", self.controls.sectionCharImport, "TOPLEFT" }, 6,
+				14, 200, 16, function()
+				return "^7Character import status: " .. self.charImportStatus
 			end)
-		end)
-	end
-	-- accountHistory Control
-	if not historyList then
-		historyList = { }
-		for accountName, account in pairs(main.gameAccounts) do
-			t_insert(historyList, accountName)
-			historyList[accountName] = true
+
+		-- Stage: input account name
+		self.controls.accountNameHeader = new("LabelControl", { "TOPLEFT", self.controls.sectionCharImport, "TOPLEFT" },
+				6, 40,
+				200, 16, "^7To start importing a character, enter the character's account name:")
+		self.controls.accountNameHeader.shown = function()
+			return self.charImportMode == "GETACCOUNTNAME"
 		end
-		table.sort(historyList, function(a,b)
-			return a:lower() < b:lower()
-		end)
-	end -- don't load the list many times
-	self.controls.accountNameGo = new("ButtonControl", {"LEFT",self.controls.accountName,"RIGHT"}, 8, 0, 60, 20, "Start", function()
-		self.controls.sessionInput.buf = ""
-		self:DownloadCharacterList()
-	end)
-	self.controls.accountNameGo.enabled = function()
-		return self.controls.accountName.buf:match("%S")
-	end
+		self.controls.accountRealm = new("DropDownControl", { "TOPLEFT", self.controls.accountNameHeader, "BOTTOMLEFT" },
+				0, 4,
+				60, 20, realmList)
+		self.controls.accountRealm:SelByValue(main.lastRealm or "PC", "id")
+		self.controls.accountName = new("EditControl", { "LEFT", self.controls.accountRealm, "RIGHT" }, 8, 0, 200, 20,
+				main.lastAccountName or "", nil, "%c")
+		self.controls.accountName.pasteFilter = function(text)
+			return text:gsub("[\128-\255]", function(c)
+					return codePointToUTF8(c:byte(1)):gsub(".", function(c)
+							return string.format("%%%X", c:byte(1))
+						end)
+				end)
+		end
+		-- accountHistory Control
+		if not historyList then
+			historyList = {}
+			for accountName, account in pairs(main.gameAccounts) do
+				t_insert(historyList, accountName)
+				historyList[accountName] = true
+			end
+			table.sort(historyList, function(a, b)
+				return a:lower() < b:lower()
+			end)
+		end -- don't load the list many times
+		self.controls.accountNameGo = new("ButtonControl", { "LEFT", self.controls.accountName, "RIGHT" }, 8, 0, 60, 20,
+				"Start"
+				, function()
+				self.controls.sessionInput.buf = ""
+				self:DownloadCharacterList()
+			end)
+		self.controls.accountNameGo.enabled = function()
+			return self.controls.accountName.buf:match("%S")
+		end
 
-	self.controls.accountHistory = new("DropDownControl", {"LEFT",self.controls.accountNameGo,"RIGHT"}, 8, 0, 200, 20, historyList, function()
-		self.controls.accountName.buf = self.controls.accountHistory.list[self.controls.accountHistory.selIndex]
-	end)
-	self.controls.accountHistory:SelByValue(main.lastAccountName)
-	self.controls.accountHistory:CheckDroppedWidth(true)
+		self.controls.accountHistory = new("DropDownControl", { "LEFT", self.controls.accountNameGo, "RIGHT" }, 8, 0, 200,
+				20,
+				historyList, function()
+				self.controls.accountName.buf = self.controls.accountHistory.list[self.controls.accountHistory.selIndex]
+			end)
+		self.controls.accountHistory:SelByValue(main.lastAccountName)
+		self.controls.accountHistory:CheckDroppedWidth(true)
 
-	self.controls.accountNameUnicode = new("LabelControl", {"TOPLEFT",self.controls.accountRealm,"BOTTOMLEFT"}, 0, 16, 0, 14, "^7Note: if the account name contains non-ASCII characters then it must be URL encoded first.")
-	self.controls.accountNameURLEncoder = new("ButtonControl", {"TOPLEFT",self.controls.accountNameUnicode,"BOTTOMLEFT"}, 0, 4, 170, 18, "^x4040FFhttps://www.urlencoder.org/", function()
-		OpenURL("https://www.urlencoder.org/")
-	end)
+		self.controls.accountNameUnicode = new("LabelControl", { "TOPLEFT", self.controls.accountRealm, "BOTTOMLEFT" }, 0,
+				16, 0
+				, 14, "^7Note: if the account name contains non-ASCII characters then it must be URL encoded first.")
+		self.controls.accountNameURLEncoder = new("ButtonControl",
+				{ "TOPLEFT", self.controls.accountNameUnicode, "BOTTOMLEFT" }
+				, 0, 4, 170, 18, "^x4040FFhttps://www.urlencoder.org/", function()
+				OpenURL("https://www.urlencoder.org/")
+			end)
 
-	-- Stage: input POESESSID
-	self.controls.sessionHeader = new("LabelControl", {"TOPLEFT",self.controls.sectionCharImport,"TOPLEFT"}, 6, 40, 200, 14)
-	self.controls.sessionHeader.label = function()
-		return [[
-^7The list of characters on ']]..self.controls.accountName.buf..[[' couldn't be retrieved. This may be because:
+		-- Stage: input POESESSID
+		self.controls.sessionHeader = new("LabelControl", { "TOPLEFT", self.controls.sectionCharImport, "TOPLEFT" }, 6,
+				40, 200
+				, 14)
+		self.controls.sessionHeader.label = function()
+			return [[
+^7The list of characters on ']] .. self.controls.accountName.buf .. [[' couldn't be retrieved. This may be because:
 1. You entered a character name instead of an account name or
 2. This account's characters tab is hidden (this is the default setting).
 If this is your account, you can either:
@@ -88,254 +111,320 @@ If this is your account, you can either:
 2. Enter a POESESSID below.
 You can get this from your web browser's cookies while logged into the Path of Exile website.
 		]]
-	end
-	self.controls.sessionHeader.shown = function()
-		return self.charImportMode == "GETSESSIONID"
-	end
-	self.controls.sessionRetry = new("ButtonControl", {"TOPLEFT",self.controls.sessionHeader,"TOPLEFT"}, 0, 108, 60, 20, "Retry", function()
-		self:DownloadCharacterList()
-	end)
-	self.controls.sessionCancel = new("ButtonControl", {"LEFT",self.controls.sessionRetry,"RIGHT"}, 8, 0, 60, 20, "Cancel", function()
-		self.charImportMode = "GETACCOUNTNAME"
-		self.charImportStatus = "Idle"
-	end)
-	self.controls.sessionPrivacySettings = new("ButtonControl", {"LEFT",self.controls.sessionCancel,"RIGHT"}, 8, 0, 120, 20, "Privacy Settings", function()
-		OpenURL('https://www.pathofexile.com/my-account/privacy')
-	end)
-	self.controls.sessionInput = new("EditControl", {"TOPLEFT",self.controls.sessionRetry,"BOTTOMLEFT"}, 0, 8, 350, 20, "", "POESESSID", "%X", 32)
-	self.controls.sessionInput:SetProtected(true)
-	self.controls.sessionGo = new("ButtonControl", {"LEFT",self.controls.sessionInput,"RIGHT"}, 8, 0, 60, 20, "Go", function()
-		self:DownloadCharacterList()
-	end)
-	self.controls.sessionGo.enabled = function()
-		return #self.controls.sessionInput.buf == 32
-	end
-
-	-- Stage: select character and import data
-	self.controls.charSelectHeader = new("LabelControl", {"TOPLEFT",self.controls.sectionCharImport,"TOPLEFT"}, 6, 40, 200, 16, "^7Choose character to import data from:")
-	self.controls.charSelectHeader.shown = function()
-		return self.charImportMode == "SELECTCHAR" or self.charImportMode == "IMPORTING"
-	end
-	self.controls.charSelectLeagueLabel = new("LabelControl", {"TOPLEFT",self.controls.charSelectHeader,"BOTTOMLEFT"}, 0, 6, 0, 14, "^7League:")
-	self.controls.charSelectLeague = new("DropDownControl", {"LEFT",self.controls.charSelectLeagueLabel,"RIGHT"}, 4, 0, 150, 18, nil, function(index, value)
-		self:BuildCharacterList(value.league)
-	end)
-	self.controls.charSelect = new("DropDownControl", {"TOPLEFT",self.controls.charSelectHeader,"BOTTOMLEFT"}, 0, 24, 400, 18)
-	self.controls.charSelect.enabled = function()
-		return self.charImportMode == "SELECTCHAR"
-	end
-	self.controls.charImportHeader = new("LabelControl", {"TOPLEFT",self.controls.charSelect,"BOTTOMLEFT"}, 0, 16, 200, 16, "Import:")
-	self.controls.charImportTree = new("ButtonControl", {"LEFT",self.controls.charImportHeader, "RIGHT"}, 8, 0, 170, 20, "Passive Tree and Jewels", function()
-		if self.build.spec:CountAllocNodes() > 0 then
-			main:OpenConfirmPopup("Character Import", "Importing the passive tree will overwrite your current tree.", "Import", function()
-				self:DownloadPassiveTree()
+		end
+		self.controls.sessionHeader.shown = function()
+			return self.charImportMode == "GETSESSIONID"
+		end
+		self.controls.sessionRetry = new("ButtonControl", { "TOPLEFT", self.controls.sessionHeader, "TOPLEFT" }, 0, 108,
+				60, 20
+				, "Retry", function()
+				self:DownloadCharacterList()
 			end)
-		else
-			self:DownloadPassiveTree()
+		self.controls.sessionCancel = new("ButtonControl", { "LEFT", self.controls.sessionRetry, "RIGHT" }, 8, 0, 60, 20,
+				"Cancel", function()
+				self.charImportMode = "GETACCOUNTNAME"
+				self.charImportStatus = "Idle"
+			end)
+		self.controls.sessionPrivacySettings = new("ButtonControl", { "LEFT", self.controls.sessionCancel, "RIGHT" }, 8,
+				0, 120
+				, 20, "Privacy Settings", function()
+				OpenURL('https://www.pathofexile.com/my-account/privacy')
+			end)
+		self.controls.sessionInput = new("EditControl", { "TOPLEFT", self.controls.sessionRetry, "BOTTOMLEFT" }, 0, 8,
+				350, 20,
+				"", "POESESSID", "%X", 32)
+		self.controls.sessionInput:SetProtected(true)
+		self.controls.sessionGo = new("ButtonControl", { "LEFT", self.controls.sessionInput, "RIGHT" }, 8, 0, 60, 20,
+				"Go",
+				function()
+					self:DownloadCharacterList()
+				end)
+		self.controls.sessionGo.enabled = function()
+			return #self.controls.sessionInput.buf == 32
 		end
-	end)
-	self.controls.charImportTree.enabled = function()
-		return self.charImportMode == "SELECTCHAR"
-	end
-	self.controls.charImportTreeClearJewels = new("CheckBoxControl", {"LEFT",self.controls.charImportTree,"RIGHT"}, 90, 0, 18, "Delete jewels:", nil, "Delete all existing jewels when importing.", true)
-	self.controls.charImportItems = new("ButtonControl", {"LEFT",self.controls.charImportTree, "LEFT"}, 0, 36, 110, 20, "Items and Skills", function()
-		self:DownloadItems()
-	end)
-	self.controls.charImportItems.enabled = function()
-		return self.charImportMode == "SELECTCHAR"
-	end
-	self.controls.charImportItemsClearSkills = new("CheckBoxControl", {"LEFT",self.controls.charImportItems,"RIGHT"}, 85, 0, 18, "Delete skills:", nil, "Delete all existing skills when importing.", true)
-	self.controls.charImportItemsClearItems = new("CheckBoxControl", {"LEFT",self.controls.charImportItems,"RIGHT"}, 220, 0, 18, "Delete equipment:", nil, "Delete all equipped items when importing.", true)
-	self.controls.charBanditNote = new("LabelControl", {"TOPLEFT",self.controls.charImportHeader,"BOTTOMLEFT"}, 0, 50, 200, 14, "^7Tip: After you finish importing a character, make sure you update the bandit choice,\nas it cannot be imported.")
 
-	self.controls.charClose = new("ButtonControl", {"TOPLEFT",self.controls.charImportHeader,"BOTTOMLEFT"}, 0, 90, 60, 20, "Close", function()
-		self.charImportMode = "GETACCOUNTNAME"
-		self.charImportStatus = "Idle"
-	end)
-
-	-- Build import/export
-	self.controls.sectionBuild = new("SectionControl", {"TOPLEFT",self.controls.sectionCharImport,"BOTTOMLEFT"}, 0, 18, 600, 182, "Build Sharing")
-	self.controls.generateCodeLabel = new("LabelControl", {"TOPLEFT",self.controls.sectionBuild,"TOPLEFT"}, 6, 14, 0, 16, "^7Generate a code to share this build with other Path of Building users:")
-	self.controls.generateCode = new("ButtonControl", {"LEFT",self.controls.generateCodeLabel,"RIGHT"}, 4, 0, 80, 20, "Generate", function()
-		self.controls.generateCodeOut:SetText(common.base64.encode(Deflate(self.build:SaveDB("code"))):gsub("+","-"):gsub("/","_"))
-	end)
-	self.controls.generateCodeOut = new("EditControl", {"TOPLEFT",self.controls.generateCodeLabel,"BOTTOMLEFT"}, 0, 8, 250, 20, "", "Code", "%Z")
-	self.controls.generateCodeOut.enabled = function()
-		return #self.controls.generateCodeOut.buf > 0
-	end
-	self.controls.generateCodeCopy = new("ButtonControl", {"LEFT",self.controls.generateCodeOut,"RIGHT"}, 8, 0, 60, 20, "Copy", function()
-		Copy(self.controls.generateCodeOut.buf)
-		self.controls.generateCodeOut:SetText("")
-	end)
-	self.controls.generateCodeCopy.enabled = function()
-		return #self.controls.generateCodeOut.buf > 0
-	end
-
-	local getExportSitesFromImportList = function()
-		local exportWebsites = { }
-		for k,v in pairs(buildSites.websiteList) do
-			-- if entry has fields needed for Export
-			if buildSites.websiteList[k].postUrl and buildSites.websiteList[k].postFields and buildSites.websiteList[k].codeOut then
-				table.insert(exportWebsites, v)
-			end
+		-- Stage: select character and import data
+		self.controls.charSelectHeader = new("LabelControl", { "TOPLEFT", self.controls.sectionCharImport, "TOPLEFT" }, 6,
+				40,
+				200, 16, "^7Choose character to import data from:")
+		self.controls.charSelectHeader.shown = function()
+			return self.charImportMode == "SELECTCHAR" or self.charImportMode == "IMPORTING"
 		end
-		return exportWebsites
-	end
-	local exportWebsitesList = getExportSitesFromImportList()
-
-	self.controls.exportFrom = new("DropDownControl", { "LEFT", self.controls.generateCodeCopy,"RIGHT"}, 8, 0, 120, 20, exportWebsitesList, function(_, selectedWebsite)
-		main.lastExportWebsite = selectedWebsite.id
-		self.exportWebsiteSelected = selectedWebsite.id
-	end)
-	self.controls.exportFrom:SelByValue(self.exportWebsiteSelected or main.lastExportWebsite or "Pastebin", "id")
-	self.controls.generateCodeByLink = new("ButtonControl", { "LEFT", self.controls.exportFrom, "RIGHT"}, 8, 0, 100, 20, "Share", function()
-		local exportWebsite = exportWebsitesList[self.controls.exportFrom.selIndex]
-		local response = buildSites.UploadBuild(self.controls.generateCodeOut.buf, exportWebsite)
-		if response then
-			self.controls.generateCodeOut:SetText("")
-			self.controls.generateCodeByLink.label = "Creating link..."
-			launch:RegisterSubScript(response, function(pasteLink, errMsg)
-				self.controls.generateCodeByLink.label = "Share"
-				if errMsg then
-					main:OpenMessagePopup(exportWebsite.id, "Error creating link:\n"..errMsg)
+		self.controls.charSelectLeagueLabel = new("LabelControl",
+				{ "TOPLEFT", self.controls.charSelectHeader, "BOTTOMLEFT" }, 0
+				, 6, 0, 14, "^7League:")
+		self.controls.charSelectLeague = new("DropDownControl", { "LEFT", self.controls.charSelectLeagueLabel, "RIGHT" },
+				4, 0,
+				150, 18, nil, function(index, value)
+				self:BuildCharacterList(value.league)
+			end)
+		self.controls.charSelect = new("DropDownControl", { "TOPLEFT", self.controls.charSelectHeader, "BOTTOMLEFT" }, 0,
+				24,
+				400, 18)
+		self.controls.charSelect.enabled = function()
+			return self.charImportMode == "SELECTCHAR"
+		end
+		self.controls.charImportHeader = new("LabelControl", { "TOPLEFT", self.controls.charSelect, "BOTTOMLEFT" }, 0, 16,
+				200,
+				16, "Import:")
+		self.controls.charImportTree = new("ButtonControl", { "LEFT", self.controls.charImportHeader, "RIGHT" }, 8, 0,
+				170, 20,
+				"Passive Tree and Jewels", function()
+				if self.build.spec:CountAllocNodes() > 0 then
+					main:OpenConfirmPopup("Character Import",
+						"Importing the passive tree will overwrite your current tree.", "Import",
+						function()
+							self:DownloadPassiveTree()
+						end)
 				else
-					self.controls.generateCodeOut:SetText(exportWebsite.codeOut..pasteLink)
+					self:DownloadPassiveTree()
 				end
 			end)
+		self.controls.charImportTree.enabled = function()
+			return self.charImportMode == "SELECTCHAR"
 		end
-	end)
-	self.controls.generateCodeByLink.enabled = function()
-		for _, exportSite in ipairs(exportWebsitesList) do
-			if #self.controls.generateCodeOut.buf > 0 and self.controls.generateCodeOut.buf:match(exportSite.matchURL) then
-				return false
-			end
+		self.controls.charImportTreeClearJewels = new("CheckBoxControl",
+				{ "LEFT", self.controls.charImportTree, "RIGHT" }, 90,
+				0, 18, "Delete jewels:", nil, "Delete all existing jewels when importing.", true)
+		self.controls.charImportItems = new("ButtonControl", { "LEFT", self.controls.charImportTree, "LEFT" }, 0, 36, 110,
+				20,
+				"Items and Skills", function()
+				self:DownloadItems()
+			end)
+		self.controls.charImportItems.enabled = function()
+			return self.charImportMode == "SELECTCHAR"
 		end
-		return #self.controls.generateCodeOut.buf > 0
-	end
-	self.controls.exportFrom.enabled = function()
-		for _, exportSite in ipairs(exportWebsitesList) do
-			if #self.controls.generateCodeOut.buf > 0 and self.controls.generateCodeOut.buf:match(exportSite.matchURL) then
-				return false
-			end
-		end
-		return #self.controls.generateCodeOut.buf > 0
-	end
-	self.controls.generateCodeNote = new("LabelControl", {"TOPLEFT",self.controls.generateCodeOut,"BOTTOMLEFT"}, 0, 4, 0, 14, "^7Note: this code can be very long; you can use 'Share' to shrink it.")
-	self.controls.importCodeHeader = new("LabelControl", {"TOPLEFT",self.controls.generateCodeNote,"BOTTOMLEFT"}, 0, 26, 0, 16, "^7To import a build, enter URL or code here:")
+		self.controls.charImportItemsClearSkills = new("CheckBoxControl",
+				{ "LEFT", self.controls.charImportItems, "RIGHT" }, 85
+				, 0, 18, "Delete skills:", nil, "Delete all existing skills when importing.", true)
+		self.controls.charImportItemsClearItems = new("CheckBoxControl",
+				{ "LEFT", self.controls.charImportItems, "RIGHT" }, 220
+				, 0, 18, "Delete equipment:", nil, "Delete all equipped items when importing.", true)
+		self.controls.charBanditNote = new("LabelControl", { "TOPLEFT", self.controls.charImportHeader, "BOTTOMLEFT" }, 0,
+				50,
+				200, 14,
+				"^7Tip: After you finish importing a character, make sure you update the bandit choice,\nas it cannot be imported.")
 
-	local importCodeHandle = function (buf)
-		self.importCodeSite = nil
-		self.importCodeDetail = ""
-		self.importCodeXML = nil
-		self.importCodeValid = false
+		self.controls.charClose = new("ButtonControl", { "TOPLEFT", self.controls.charImportHeader, "BOTTOMLEFT" }, 0, 90,
+				60,
+				20, "Close", function()
+				self.charImportMode = "GETACCOUNTNAME"
+				self.charImportStatus = "Idle"
+			end)
 
-		if #buf == 0 then
-			return
+		-- Build import/export
+		self.controls.sectionBuild = new("SectionControl", { "TOPLEFT", self.controls.sectionCharImport, "BOTTOMLEFT" },
+				0, 18,
+				600, 182, "Build Sharing")
+		self.controls.generateCodeLabel = new("LabelControl", { "TOPLEFT", self.controls.sectionBuild, "TOPLEFT" }, 6, 14,
+				0, 16
+				, "^7Generate a code to share this build with other Path of Building users:")
+		self.controls.generateCode = new("ButtonControl", { "LEFT", self.controls.generateCodeLabel, "RIGHT" }, 4, 0, 80,
+				20,
+				"Generate", function()
+				self.controls.generateCodeOut:SetText(common.base64.encode(Deflate(self.build:SaveDB("code"))):gsub("+",
+					"-"):gsub("/"
+					, "_"))
+			end)
+		self.controls.generateCodeOut = new("EditControl", { "TOPLEFT", self.controls.generateCodeLabel, "BOTTOMLEFT" },
+				0, 8,
+				250, 20, "", "Code", "%Z")
+		self.controls.generateCodeOut.enabled = function()
+			return #self.controls.generateCodeOut.buf > 0
+		end
+		self.controls.generateCodeCopy = new("ButtonControl", { "LEFT", self.controls.generateCodeOut, "RIGHT" }, 8, 0,
+				60, 20,
+				"Copy", function()
+				Copy(self.controls.generateCodeOut.buf)
+				self.controls.generateCodeOut:SetText("")
+			end)
+		self.controls.generateCodeCopy.enabled = function()
+			return #self.controls.generateCodeOut.buf > 0
 		end
 
-		if not self.build.dbFileName then
-			self.controls.importCodeMode.selIndex = 2
-		end
-
-		self.importCodeDetail = colorCodes.NEGATIVE.."Invalid input"
-		local urlText = buf:gsub("^[%s?]+", ""):gsub("[%s?]+$", "") -- Quick Trim
-		if urlText:match("youtube%.com/redirect%?") or urlText:match("google%.com/url%?") then
-			local nested_url = urlText:gsub(".*[?&]q=([^&]+).*", "%1")
-			urlText = UrlDecode(nested_url)
-		end
-
-		for j=1,#buildSites.websiteList do
-			if urlText:match(buildSites.websiteList[j].matchURL) then
-				self.controls.importCodeIn.text = urlText
-				self.importCodeValid = true
-				self.importCodeDetail = colorCodes.POSITIVE.."URL is valid ("..buildSites.websiteList[j].label..")"
-				self.importCodeSite = j
-				if buf ~= urlText then
-					self.controls.importCodeIn:SetText(urlText, false)
+		local getExportSitesFromImportList = function()
+			local exportWebsites = {}
+			for k, v in pairs(buildSites.websiteList) do
+				-- if entry has fields needed for Export
+				if buildSites.websiteList[k].postUrl and buildSites.websiteList[k].postFields and buildSites.websiteList[k].codeOut then
+					table.insert(exportWebsites, v)
 				end
+			end
+			return exportWebsites
+		end
+		local exportWebsitesList = getExportSitesFromImportList()
+
+		self.controls.exportFrom = new("DropDownControl", { "LEFT", self.controls.generateCodeCopy, "RIGHT" }, 8, 0, 120,
+				20,
+				exportWebsitesList, function(_, selectedWebsite)
+				main.lastExportWebsite = selectedWebsite.id
+				self.exportWebsiteSelected = selectedWebsite.id
+			end)
+		self.controls.exportFrom:SelByValue(self.exportWebsiteSelected or main.lastExportWebsite or "Pastebin", "id")
+		self.controls.generateCodeByLink = new("ButtonControl", { "LEFT", self.controls.exportFrom, "RIGHT" }, 8, 0, 100,
+				20,
+				"Share", function()
+				local exportWebsite = exportWebsitesList[self.controls.exportFrom.selIndex]
+				local response = buildSites.UploadBuild(self.controls.generateCodeOut.buf, exportWebsite)
+				if response then
+					self.controls.generateCodeOut:SetText("")
+					self.controls.generateCodeByLink.label = "Creating link..."
+					launch:RegisterSubScript(response, function(pasteLink, errMsg)
+						self.controls.generateCodeByLink.label = "Share"
+						if errMsg then
+							main:OpenMessagePopup(exportWebsite.id, "Error creating link:\n" .. errMsg)
+						else
+							self.controls.generateCodeOut:SetText(exportWebsite.codeOut .. pasteLink)
+						end
+					end)
+				end
+			end)
+		self.controls.generateCodeByLink.enabled = function()
+			for _, exportSite in ipairs(exportWebsitesList) do
+				if #self.controls.generateCodeOut.buf > 0 and self.controls.generateCodeOut.buf:match(exportSite.matchURL) then
+					return false
+				end
+			end
+			return #self.controls.generateCodeOut.buf > 0
+		end
+		self.controls.exportFrom.enabled = function()
+			for _, exportSite in ipairs(exportWebsitesList) do
+				if #self.controls.generateCodeOut.buf > 0 and self.controls.generateCodeOut.buf:match(exportSite.matchURL) then
+					return false
+				end
+			end
+			return #self.controls.generateCodeOut.buf > 0
+		end
+		self.controls.generateCodeNote = new("LabelControl", { "TOPLEFT", self.controls.generateCodeOut, "BOTTOMLEFT" },
+				0, 4, 0
+				, 14, "^7Note: this code can be very long; you can use 'Share' to shrink it.")
+		self.controls.importCodeHeader = new("LabelControl", { "TOPLEFT", self.controls.generateCodeNote, "BOTTOMLEFT" },
+				0, 26
+				, 0, 16, "^7To import a build, enter URL or code here:")
+
+		local importCodeHandle = function(buf)
+			self.importCodeSite = nil
+			self.importCodeDetail = ""
+			self.importCodeXML = nil
+			self.importCodeValid = false
+
+			if #buf == 0 then
 				return
 			end
-		end
 
-		local xmlText = Inflate(common.base64.decode(buf:gsub("-","+"):gsub("_","/")))
-		if not xmlText then
-			return
-		end
-		if launch.devMode and IsKeyDown("SHIFT") then
-			Copy(xmlText)
-		end
-		self.importCodeValid = true
-		self.importCodeDetail = colorCodes.POSITIVE.."Code is valid"
-		self.importCodeXML = xmlText
-	end
+			if not self.build.dbFileName then
+				self.controls.importCodeMode.selIndex = 2
+			end
 
-	local importSelectedBuild = function()
-		if not self.importCodeValid or self.importCodeFetching then
-			return
-		end
+			self.importCodeDetail = colorCodes.NEGATIVE .. "Invalid input"
+			local urlText = buf:gsub("^[%s?]+", ""):gsub("[%s?]+$", "") -- Quick Trim
+			if urlText:match("youtube%.com/redirect%?") or urlText:match("google%.com/url%?") then
+				local nested_url = urlText:gsub(".*[?&]q=([^&]+).*", "%1")
+				urlText = UrlDecode(nested_url)
+			end
 
-		if self.controls.importCodeMode.selIndex == 1 then
-			main:OpenConfirmPopup("Build Import", colorCodes.WARNING.."Warning:^7 Importing to the current build will erase ALL existing data for this build.", "Import", function()
-				self.build:Shutdown()
-				self.build:Init(self.build.dbFileName, self.build.buildName, self.importCodeXML)
-				self.build.viewMode = "TREE"
-			end)
-		else
-			self.build:Shutdown()
-			self.build:Init(false, "Imported build", self.importCodeXML)
-			self.build.viewMode = "TREE"
-		end
-	end
-
-	self.controls.importCodeIn = new("EditControl", {"TOPLEFT",self.controls.importCodeHeader,"BOTTOMLEFT"}, 0, 4, 328, 20, "", nil, nil, nil, importCodeHandle)
-	self.controls.importCodeIn.enterFunc = function()
-		if self.importCodeValid then
-			self.controls.importCodeGo.onClick()
-		end
-	end
-	self.controls.importCodeState = new("LabelControl", {"LEFT",self.controls.importCodeIn,"RIGHT"}, 8, 0, 0, 16)
-	self.controls.importCodeState.label = function()
-		return self.importCodeDetail or ""
-	end
-	self.controls.importCodeMode = new("DropDownControl", {"TOPLEFT",self.controls.importCodeIn,"BOTTOMLEFT"}, 0, 4, 160, 20, { "Import to this build", "Import to a new build" })
-	self.controls.importCodeMode.enabled = function()
-		return self.build.dbFileName and self.importCodeValid
-	end
-	self.controls.importCodeGo = new("ButtonControl", {"LEFT",self.controls.importCodeMode,"RIGHT"}, 8, 0, 160, 20, "Import", function()
-		if self.importCodeSite and not self.importCodeXML then
-			self.importCodeFetching = true
-			local selectedWebsite = buildSites.websiteList[self.importCodeSite]
-			buildSites.DownloadBuild(self.controls.importCodeIn.buf, selectedWebsite, function(isSuccess, data)
-				self.importCodeFetching = false
-				if not isSuccess then
-					self.importCodeDetail = colorCodes.NEGATIVE..data
-					self.importCodeValid = false
-				else
-					importCodeHandle(data)
-					importSelectedBuild()
+			for j = 1, #buildSites.websiteList do
+				if urlText:match(buildSites.websiteList[j].matchURL) then
+					self.controls.importCodeIn.text = urlText
+					self.importCodeValid = true
+					self.importCodeDetail = colorCodes.POSITIVE ..
+						"URL is valid (" .. buildSites.websiteList[j].label .. ")"
+					self.importCodeSite = j
+					if buf ~= urlText then
+						self.controls.importCodeIn:SetText(urlText, false)
+					end
+					return
 				end
-			end)
-			return
+			end
+
+			local xmlText = Inflate(common.base64.decode(buf:gsub("-", "+"):gsub("_", "/")))
+			if not xmlText then
+				return
+			end
+			if launch.devMode and IsKeyDown("SHIFT") then
+				Copy(xmlText)
+			end
+			self.importCodeValid = true
+			self.importCodeDetail = colorCodes.POSITIVE .. "Code is valid"
+			self.importCodeXML = xmlText
 		end
 
-		importSelectedBuild()
-	end)
-	self.controls.importCodeGo.label = function ()
-		return self.importCodeFetching and "Retrieving paste.." or "Import"
-	end
-	self.controls.importCodeGo.enabled = function()
-		return self.importCodeValid and not self.importCodeFetching
-	end
-	self.controls.importCodeGo.enterFunc = function()
-		if self.importCodeValid then
-			self.controls.importCodeGo.onClick()
+		local importSelectedBuild = function()
+			if not self.importCodeValid or self.importCodeFetching then
+				return
+			end
+
+			if self.controls.importCodeMode.selIndex == 1 then
+				main:OpenConfirmPopup("Build Import",
+					colorCodes.WARNING ..
+					"Warning:^7 Importing to the current build will erase ALL existing data for this build.",
+					"Import", function()
+					self.build:Shutdown()
+					self.build:Init(self.build.dbFileName, self.build.buildName, self.importCodeXML)
+					self.build.viewMode = "TREE"
+				end)
+			else
+				self.build:Shutdown()
+				self.build:Init(false, "Imported build", self.importCodeXML)
+				self.build.viewMode = "TREE"
+			end
 		end
-	end
-end)
+
+		self.controls.importCodeIn = new("EditControl", { "TOPLEFT", self.controls.importCodeHeader, "BOTTOMLEFT" }, 0, 4,
+				328,
+				20, "", nil, nil, nil, importCodeHandle)
+		self.controls.importCodeIn.enterFunc = function()
+			if self.importCodeValid then
+				self.controls.importCodeGo.onClick()
+			end
+		end
+		self.controls.importCodeState = new("LabelControl", { "LEFT", self.controls.importCodeIn, "RIGHT" }, 8, 0, 0, 16)
+		self.controls.importCodeState.label = function()
+			return self.importCodeDetail or ""
+		end
+		self.controls.importCodeMode = new("DropDownControl", { "TOPLEFT", self.controls.importCodeIn, "BOTTOMLEFT" }, 0,
+				4, 160
+				, 20, { "Import to this build", "Import to a new build" })
+		self.controls.importCodeMode.enabled = function()
+			return self.build.dbFileName and self.importCodeValid
+		end
+		self.controls.importCodeGo = new("ButtonControl", { "LEFT", self.controls.importCodeMode, "RIGHT" }, 8, 0, 160,
+				20,
+				"Import", function()
+				if self.importCodeSite and not self.importCodeXML then
+					self.importCodeFetching = true
+					local selectedWebsite = buildSites.websiteList[self.importCodeSite]
+					buildSites.DownloadBuild(self.controls.importCodeIn.buf, selectedWebsite, function(isSuccess, data)
+						self.importCodeFetching = false
+						if not isSuccess then
+							self.importCodeDetail = colorCodes.NEGATIVE .. data
+							self.importCodeValid = false
+						else
+							importCodeHandle(data)
+							importSelectedBuild()
+						end
+					end)
+					return
+				end
+
+				importSelectedBuild()
+			end)
+		self.controls.importCodeGo.label = function()
+			return self.importCodeFetching and "Retrieving paste.." or "Import"
+		end
+		self.controls.importCodeGo.enabled = function()
+			return self.importCodeValid and not self.importCodeFetching
+		end
+		self.controls.importCodeGo.enterFunc = function()
+			if self.importCodeValid then
+				self.controls.importCodeGo.onClick()
+			end
+		end
+	end)
 
 function ImportTabClass:Load(xml, fileName)
 	self.lastRealm = xml.attrib.lastRealm
-	self.controls.accountRealm:SelByValue( self.lastRealm or main.lastRealm or "PC", "id" )
+	self.controls.accountRealm:SelByValue(self.lastRealm or main.lastRealm or "PC", "id")
 	self.lastAccountHash = xml.attrib.lastAccountHash
 	if self.lastAccountHash then
 		for accountName in pairs(main.gameAccounts) do
@@ -368,94 +457,108 @@ function ImportTabClass:Draw(viewPort, inputEvents)
 	self:DrawControls(viewPort)
 end
 
+function ImportTabClass:SetProfileName(name)
+	ConPrintf("check 3")
+	self.controls.accountName.buf = name
+	ConPrintf("check 4")
+end
+
 function ImportTabClass:DownloadCharacterList()
 	self.charImportMode = "DOWNLOADCHARLIST"
 	self.charImportStatus = "Retrieving character list..."
-	  -- Trim Trailing/Leading spaces
+	-- Trim Trailing/Leading spaces
 	local accountName = self.controls.accountName.buf:gsub('%s+', '')
 	local realm = realmList[self.controls.accountRealm.selIndex]
-	local sessionID = #self.controls.sessionInput.buf == 32 and self.controls.sessionInput.buf or (main.gameAccounts[accountName] and main.gameAccounts[accountName].sessionID)
-	launch:DownloadPage(realm.hostName.."character-window/get-characters?accountName="..accountName.."&realm="..realm.realmCode, function(response, errMsg)
-		if errMsg == "Response code: 401" then
-			self.charImportStatus = colorCodes.NEGATIVE.."Sign-in is required."
-			self.charImportMode = "GETSESSIONID"
-			return
-		elseif errMsg == "Response code: 403" then
-			self.charImportStatus = colorCodes.NEGATIVE.."Account profile is private."
-			self.charImportMode = "GETSESSIONID"
-			return
-		elseif errMsg == "Response code: 404" then
-			self.charImportStatus = colorCodes.NEGATIVE.."Account name is incorrect."
-			self.charImportMode = "GETACCOUNTNAME"
-			return
-		elseif errMsg then
-			self.charImportStatus = colorCodes.NEGATIVE.."Error retrieving character list, try again ("..errMsg:gsub("\n"," ")..")"
-			self.charImportMode = "GETACCOUNTNAME"
-			return
-		end
-		local charList, errMsg = self:ProcessJSON(response.body)
-		if errMsg then
-			self.charImportStatus = colorCodes.NEGATIVE.."Error processing character list, try again later"
-			self.charImportMode = "GETACCOUNTNAME"
-			return
-		end
-		--ConPrintTable(charList)
-		if #charList == 0 then
-			self.charImportStatus = colorCodes.NEGATIVE.."The account has no characters to import."
-			self.charImportMode = "GETACCOUNTNAME"
-			return
-		end
-		-- GGG's character API has an issue where for /get-characters the account name is not case-sensitive, but for /get-passive-skills and /get-items it is.
-		-- This workaround grabs the profile page and extracts the correct account name from one of the URLs.
-		launch:DownloadPage(realm.hostName..realm.profileURL..accountName, function(response, errMsg)
-			if errMsg then
-				self.charImportStatus = colorCodes.NEGATIVE.."Error retrieving character list, try again ("..errMsg:gsub("\n"," ")..")"
+	local sessionID = #self.controls.sessionInput.buf == 32 and self.controls.sessionInput.buf or
+		(main.gameAccounts[accountName] and main.gameAccounts[accountName].sessionID)
+	ConPrintf("check 5 %s %s", accountName, realm.hostName)
+	launch:DownloadPage(realm.hostName ..
+	"character-window/get-characters?accountName=" .. accountName .. "&realm=" .. realm.realmCode,
+		function(response, errMsg)
+			ConPrintf("check 6 %s", errMsg)
+			if errMsg == "Response code: 401" then
+				self.charImportStatus = colorCodes.NEGATIVE .. "Sign-in is required."
+				self.charImportMode = "GETSESSIONID"
+				return
+			elseif errMsg == "Response code: 403" then
+				self.charImportStatus = colorCodes.NEGATIVE .. "Account profile is private."
+				self.charImportMode = "GETSESSIONID"
+				return
+			elseif errMsg == "Response code: 404" then
+				self.charImportStatus = colorCodes.NEGATIVE .. "Account name is incorrect."
+				self.charImportMode = "GETACCOUNTNAME"
+				return
+			elseif errMsg then
+				self.charImportStatus = colorCodes.NEGATIVE ..
+					"Error retrieving character list, try again (" .. errMsg:gsub("\n", " ") .. ")"
 				self.charImportMode = "GETACCOUNTNAME"
 				return
 			end
-			local realAccountName = response.body:match("/view%-profile/([^/]+)/characters"):gsub(".", function(c) if c:byte(1) > 127 then return string.format("%%%2X",c:byte(1)) else return c end end)
-			if not realAccountName then
-				self.charImportStatus = colorCodes.NEGATIVE.."Failed to retrieve character list."
-				self.charImportMode = "GETSESSIONID"
+			local charList, errMsg = self:ProcessJSON(response.body)
+			if errMsg then
+				self.charImportStatus = colorCodes.NEGATIVE .. "Error processing character list, try again later"
+				self.charImportMode = "GETACCOUNTNAME"
 				return
 			end
-			self.controls.accountName:SetText(realAccountName)
-			accountName = realAccountName
-			self.charImportStatus = "Character list successfully retrieved."
-			self.charImportMode = "SELECTCHAR"
-			self.lastRealm = realm.id
-			main.lastRealm = realm.id
-			self.lastAccountHash = common.sha1(accountName)
-			main.lastAccountName = accountName
-			main.gameAccounts[accountName] = main.gameAccounts[accountName] or { }
-			main.gameAccounts[accountName].sessionID = sessionID
-			local leagueList = { }
-			for i, char in ipairs(charList) do
-				if not isValueInArray(leagueList, char.league) then
-					t_insert(leagueList, char.league)
+			ConPrintTable(charList)
+			if #charList == 0 then
+				self.charImportStatus = colorCodes.NEGATIVE .. "The account has no characters to import."
+				self.charImportMode = "GETACCOUNTNAME"
+				return
+			end
+			-- GGG's character API has an issue where for /get-characters the account name is not case-sensitive, but for /get-passive-skills and /get-items it is.
+			-- This workaround grabs the profile page and extracts the correct account name from one of the URLs.
+			launch:DownloadPage(realm.hostName .. realm.profileURL .. accountName, function(response, errMsg)
+				if errMsg then
+					self.charImportStatus = colorCodes.NEGATIVE ..
+						"Error retrieving character list, try again (" .. errMsg:gsub("\n", " ") .. ")"
+					self.charImportMode = "GETACCOUNTNAME"
+					return
 				end
-			end
-			table.sort(leagueList)
-			wipeTable(self.controls.charSelectLeague.list)
-			for _, league in ipairs(leagueList) do
+				local realAccountName = response.body:match("/view%-profile/([^/]+)/characters"):gsub(".",
+						function(c) if c:byte(1) > 127 then return string.format("%%%2X", c:byte(1)) else return c end end)
+				if not realAccountName then
+					self.charImportStatus = colorCodes.NEGATIVE .. "Failed to retrieve character list."
+					self.charImportMode = "GETSESSIONID"
+					return
+				end
+				self.controls.accountName:SetText(realAccountName)
+				accountName = realAccountName
+				self.charImportStatus = "Character list successfully retrieved."
+				self.charImportMode = "SELECTCHAR"
+				self.lastRealm = realm.id
+				main.lastRealm = realm.id
+				self.lastAccountHash = common.sha1(accountName)
+				main.lastAccountName = accountName
+				main.gameAccounts[accountName] = main.gameAccounts[accountName] or {}
+				main.gameAccounts[accountName].sessionID = sessionID
+				local leagueList = {}
+				for i, char in ipairs(charList) do
+					if not isValueInArray(leagueList, char.league) then
+						t_insert(leagueList, char.league)
+					end
+				end
+				table.sort(leagueList)
+				wipeTable(self.controls.charSelectLeague.list)
+				for _, league in ipairs(leagueList) do
+					t_insert(self.controls.charSelectLeague.list, {
+						label = league,
+						league = league,
+					})
+				end
 				t_insert(self.controls.charSelectLeague.list, {
-					label = league,
-					league = league,
+					label = "All",
 				})
-			end
-			t_insert(self.controls.charSelectLeague.list, {
-				label = "All",
-			})
-			if self.controls.charSelectLeague.selIndex > #self.controls.charSelectLeague.list then
-				self.controls.charSelectLeague.selIndex = 1
-			end
-			self.lastCharList = charList
-			self:BuildCharacterList(self.controls.charSelectLeague:GetSelValue("league"))
+				if self.controls.charSelectLeague.selIndex > #self.controls.charSelectLeague.list then
+					self.controls.charSelectLeague.selIndex = 1
+				end
+				self.lastCharList = charList
+				self:BuildCharacterList(self.controls.charSelectLeague:GetSelValue("league"))
 
-			-- We only get here if the accountname was correct, found, and not private, so add it to the account history.
-			self:SaveAccountHistory()
+				-- We only get here if the accountname was correct, found, and not private, so add it to the account history.
+				self:SaveAccountHistory()
+			end, sessionID and { header = "Cookie: POESESSID=" .. sessionID })
 		end, sessionID and { header = "Cookie: POESESSID=" .. sessionID })
-	end, sessionID and { header = "Cookie: POESESSID=" .. sessionID })
 end
 
 function ImportTabClass:BuildCharacterList(league)
@@ -463,12 +566,13 @@ function ImportTabClass:BuildCharacterList(league)
 	for i, char in ipairs(self.lastCharList) do
 		if not league or char.league == league then
 			t_insert(self.controls.charSelect.list, {
-				label = string.format("%s: Level %d %s in %s", char.name or "?", char.level or 0, char.class or "?", char.league or "?"),
+				label = string.format("%s: Level %d %s in %s", char.name or "?", char.level or 0, char.class or "?",
+					char.league or "?"),
 				char = char,
 			})
 		end
 	end
-	table.sort(self.controls.charSelect.list, function(a,b)
+	table.sort(self.controls.charSelect.list, function(a, b)
 		return a.char.name:lower() < b.char.name:lower()
 	end)
 	self.controls.charSelect.selIndex = 1
@@ -487,7 +591,7 @@ function ImportTabClass:SaveAccountHistory()
 		t_insert(historyList, self.controls.accountName.buf)
 		historyList[self.controls.accountName.buf] = true
 		self.controls.accountHistory:SelByValue(self.controls.accountName.buf)
-		table.sort(historyList, function(a,b)
+		table.sort(historyList, function(a, b)
 			return a:lower() < b:lower()
 		end)
 		self.controls.accountHistory:CheckDroppedWidth(true)
@@ -499,16 +603,20 @@ function ImportTabClass:DownloadPassiveTree()
 	self.charImportStatus = "Retrieving character passive tree..."
 	local realm = realmList[self.controls.accountRealm.selIndex]
 	local accountName = self.controls.accountName.buf
-	local sessionID = #self.controls.sessionInput.buf == 32 and self.controls.sessionInput.buf or (main.gameAccounts[accountName] and main.gameAccounts[accountName].sessionID)
+	local sessionID = #self.controls.sessionInput.buf == 32 and self.controls.sessionInput.buf or
+		(main.gameAccounts[accountName] and main.gameAccounts[accountName].sessionID)
 	local charSelect = self.controls.charSelect
 	local charData = charSelect.list[charSelect.selIndex].char
-	launch:DownloadPage(realm.hostName.."character-window/get-passive-skills?accountName="..accountName.."&character="..charData.name.."&realm="..realm.realmCode, function(response, errMsg)
+	launch:DownloadPage(realm.hostName ..
+	"character-window/get-passive-skills?accountName=" ..
+	accountName .. "&character=" .. charData.name .. "&realm=" .. realm.realmCode, function(response, errMsg)
 		self.charImportMode = "SELECTCHAR"
 		if errMsg then
-			self.charImportStatus = colorCodes.NEGATIVE.."Error importing character data, try again ("..errMsg:gsub("\n"," ")..")"
+			self.charImportStatus = colorCodes.NEGATIVE ..
+				"Error importing character data, try again (" .. errMsg:gsub("\n", " ") .. ")"
 			return
 		elseif response.body == "false" then
-			self.charImportStatus = colorCodes.NEGATIVE.."Failed to retrieve character data, try again."
+			self.charImportStatus = colorCodes.NEGATIVE .. "Failed to retrieve character data, try again."
 			return
 		end
 		self.lastCharacterHash = common.sha1(charData.name)
@@ -521,16 +629,20 @@ function ImportTabClass:DownloadItems()
 	self.charImportStatus = "Retrieving character items..."
 	local realm = realmList[self.controls.accountRealm.selIndex]
 	local accountName = self.controls.accountName.buf
-	local sessionID = #self.controls.sessionInput.buf == 32 and self.controls.sessionInput.buf or (main.gameAccounts[accountName] and main.gameAccounts[accountName].sessionID)
+	local sessionID = #self.controls.sessionInput.buf == 32 and self.controls.sessionInput.buf or
+		(main.gameAccounts[accountName] and main.gameAccounts[accountName].sessionID)
 	local charSelect = self.controls.charSelect
 	local charData = charSelect.list[charSelect.selIndex].char
-	launch:DownloadPage(realm.hostName.."character-window/get-items?accountName="..accountName.."&character="..charData.name.."&realm="..realm.realmCode, function(response, errMsg)
+	launch:DownloadPage(realm.hostName ..
+	"character-window/get-items?accountName=" .. accountName .. "&character=" .. charData.name ..
+	"&realm=" .. realm.realmCode, function(response, errMsg)
 		self.charImportMode = "SELECTCHAR"
 		if errMsg then
-			self.charImportStatus = colorCodes.NEGATIVE.."Error importing character data, try again ("..errMsg:gsub("\n"," ")..")"
+			self.charImportStatus = colorCodes.NEGATIVE ..
+				"Error importing character data, try again (" .. errMsg:gsub("\n", " ") .. ")"
 			return
 		elseif response.body == "false" then
-			self.charImportStatus = colorCodes.NEGATIVE.."Failed to retrieve character data, try again."
+			self.charImportStatus = colorCodes.NEGATIVE .. "Failed to retrieve character data, try again."
 			return
 		end
 		self.lastCharacterHash = common.sha1(charData.name)
@@ -543,12 +655,13 @@ function ImportTabClass:ImportPassiveTreeAndJewels(json, charData)
 	--out:write(json)
 	--out:close()
 	local charPassiveData, errMsg = self:ProcessJSON(json)
-	--local out = io.open("get-passive-skills.json", "w")
-	--writeLuaTable(out, charPassiveData, 1)
-	--out:close()
-
+	--[[ local out = io.open("get-passive-skills.json", "w")
+	writeLuaTable(out, charPassiveData, 1)
+	out:close() ]]
 	-- 3.16+
-	if charPassiveData.mastery_effects then
+	ConPrintf("ImportPassiveTreeAndJewels 1 %s", errMsg)
+	--[[ if charPassiveData.mastery_effects then
+		ConPrintf("ImportPassiveTreeAndJewels effects found")
 		local mastery, effect = 0, 0
 		for key, value in pairs(charPassiveData.mastery_effects) do
 			if type(value) ~= "string" then
@@ -558,16 +671,21 @@ function ImportTabClass:ImportPassiveTreeAndJewels(json, charData)
 			effect = b_rshift(tonumber(value), 16)
 			t_insert(charPassiveData.mastery_effects, mastery, effect)
 		end
-	end
+	end ]]
+	ConPrintf("ImportPassiveTreeAndJewels 2")
 
 	if errMsg then
-		self.charImportStatus = colorCodes.NEGATIVE.."Error processing character data, try again later."
+		self.charImportStatus = colorCodes.NEGATIVE .. "Error processing character data, try again later."
 		return
 	end
-	self.charImportStatus = colorCodes.POSITIVE.."Passive tree and jewels successfully imported."
+
+	ConPrintf("ImportPassiveTreeAndJewels 3")
+	ConPrintTable(charPassiveData.hashes)
+	self.charImportStatus = colorCodes.POSITIVE .. "Passive tree and jewels successfully imported."
 	self.build.spec.jewel_data = copyTable(charPassiveData.jewel_data)
 	self.build.spec.extended_hashes = copyTable(charPassiveData.hashes_ex)
-	--ConPrintTable(charPassiveData)
+	ConPrintTable(charPassiveData)
+	ConPrintf("ImportPassiveTreeAndJewels 4")
 	if self.controls.charImportTreeClearJewels.state then
 		for _, slot in pairs(self.build.itemsTab.slots) do
 			if slot.selItemId ~= 0 and slot.nodeId then
@@ -580,23 +698,30 @@ function ImportTabClass:ImportPassiveTreeAndJewels(json, charData)
 	end
 	self.build.itemsTab:PopulateSlots()
 	self.build.itemsTab:AddUndoState()
-	self.build.spec:ImportFromNodeList(charData.classId, charData.ascendancyClass, charPassiveData.hashes, charPassiveData.mastery_effects or {})
+	self.build.spec:ImportFromNodeList(charData.classId, charData.ascendancyClass, charPassiveData.hashes,
+		charPassiveData.mastery_effects or {})
 	self.build.spec:AddUndoState()
 	self.build.characterLevel = charData.level
 	self.build.controls.characterLevel:SetText(charData.level)
 	self.build.buildFlag = true
-	main:SetWindowTitleSubtext(string.format("%s (%s, %s, %s)", self.build.buildName, charData.name, charData.class, charData.league))
+	main:SetWindowTitleSubtext(string.format("%s (%s, %s, %s)", self.build.buildName, charData.name, charData.class,
+		charData.league))
+
+	ConPrintf("ImportPassiveTreeAndJewels 5")
 end
 
 function ImportTabClass:ImportItemsAndSkills(json)
 	--local out = io.open("get-items.json", "w")
 	--out:write(json)
 	--out:close()
+	ConPrintf("ImportItemsAndSkills 1")
 	local charItemData, errMsg = self:ProcessJSON(json)
 	if errMsg then
-		self.charImportStatus = colorCodes.NEGATIVE.."Error processing character data, try again later."
+		self.charImportStatus = colorCodes.NEGATIVE .. "Error processing character data, try again later."
+		ConPrintf('error %s', errMsg)
 		return
 	end
+	ConPrintf("ImportItemsAndSkills 2")
 	if self.controls.charImportItemsClearItems.state then
 		for _, slot in pairs(self.build.itemsTab.slots) do
 			if slot.selItemId ~= 0 and not slot.nodeId then
@@ -605,10 +730,11 @@ function ImportTabClass:ImportItemsAndSkills(json)
 		end
 	end
 
+	ConPrintf("ImportItemsAndSkills 3")
 	local mainSkillEmpty = #self.build.skillsTab.socketGroupList == 0
 	local skillOrder
 	if self.controls.charImportItemsClearSkills.state then
-		skillOrder = { }
+		skillOrder = {}
 		for _, socketGroup in ipairs(self.build.skillsTab.socketGroupList) do
 			for _, gem in ipairs(socketGroup.gemList) do
 				if gem.grantedEffect and not gem.grantedEffect.support then
@@ -618,13 +744,14 @@ function ImportTabClass:ImportItemsAndSkills(json)
 		end
 		wipeTable(self.build.skillsTab.socketGroupList)
 	end
-	self.charImportStatus = colorCodes.POSITIVE.."Items and skills successfully imported."
-	--ConPrintTable(charItemData)
+	self.charImportStatus = colorCodes.POSITIVE .. "Items and skills successfully imported."
+	ConPrintf("ImportItemsAndSkills 4")
+	ConPrintTable(charItemData)
 	for _, itemData in pairs(charItemData.items) do
 		self:ImportItem(itemData)
 	end
 	if skillOrder then
-		local groupOrder = { }
+		local groupOrder = {}
 		for index, socketGroup in ipairs(self.build.skillsTab.socketGroupList) do
 			groupOrder[socketGroup] = index
 		end
@@ -663,24 +790,39 @@ function ImportTabClass:ImportItemsAndSkills(json)
 	if mainSkillEmpty then
 		self.build.mainSocketGroup = self:GuessMainSocketGroup()
 	end
+	ConPrintf("ImportItemsAndSkills 5")
 	self.build.itemsTab:PopulateSlots()
 	self.build.itemsTab:AddUndoState()
 	self.build.skillsTab:AddUndoState()
 	self.build.characterLevel = charItemData.character.level
 	self.build.controls.characterLevel:SetText(charItemData.character.level)
 	self.build.buildFlag = true
+	ConPrintf("ImportItemsAndSkills 6 %s", self.build.characterLevel)
 	return charItemData.character -- For the wrapper
 end
 
-local rarityMap = { [0] = "NORMAL", "MAGIC", "RARE", "UNIQUE", [9] = "RELIC" }
-local slotMap = { ["Weapon"] = "Weapon 1", ["Offhand"] = "Weapon 2", ["Weapon2"] = "Weapon 1 Swap", ["Offhand2"] = "Weapon 2 Swap", ["Helm"] = "Helmet", ["BodyArmour"] = "Body Armour", ["Gloves"] = "Gloves", ["Boots"] = "Boots", ["Amulet"] = "Amulet", ["Ring"] = "Ring 1", ["Ring2"] = "Ring 2", ["Belt"] = "Belt" }
+local rarityMap = { [0] = "NORMAL", "MAGIC", "RARE", "UNIQUE",[9] = "RELIC" }
+local slotMap = {
+	["Weapon"] = "Weapon 1",
+	["Offhand"] = "Weapon 2",
+	["Weapon2"] = "Weapon 1 Swap",
+	["Offhand2"] = "Weapon 2 Swap",
+	["Helm"] = "Helmet",
+	["BodyArmour"] = "Body Armour",
+	["Gloves"] = "Gloves",
+	["Boots"] = "Boots",
+	["Amulet"] = "Amulet",
+	["Ring"] = "Ring 1",
+	["Ring2"] = "Ring 2",
+	["Belt"] = "Belt"
+}
 
 function ImportTabClass:ImportItem(itemData, slotName)
 	if not slotName then
 		if itemData.inventoryId == "PassiveJewels" then
-			slotName = "Jewel "..self.build.latestTree.jewelSlots[itemData.x + 1]
+			slotName = "Jewel " .. self.build.latestTree.jewelSlots[itemData.x + 1]
 		elseif itemData.inventoryId == "Flask" then
-			slotName = "Flask "..(itemData.x + 1)
+			slotName = "Flask " .. (itemData.x + 1)
 		else
 			slotName = slotMap[itemData.inventoryId]
 		end
@@ -696,7 +838,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 	item.rarity = rarityMap[itemData.frameType]
 	if #itemData.name > 0 then
 		item.title = itemLib.sanitiseItemText(itemData.name)
-		item.baseName = itemLib.sanitiseItemText(itemData.typeLine):gsub("Synthesised ","")
+		item.baseName = itemLib.sanitiseItemText(itemData.typeLine):gsub("Synthesised ", "")
 		item.name = item.title .. ", " .. item.baseName
 		if item.baseName == "Two-Toned Boots" then
 			-- Hack for Two-Toned Boots
@@ -782,10 +924,12 @@ function ImportTabClass:ImportItem(itemData, slotName)
 					item.base = self.build.data.itemBases[item.baseName]
 				end
 			end
-			if property.name == "Energy Shield" or property.name == "Ward" or property.name == "Armour" or property.name == "Evasion Rating" then
-				item.armourData = item.armourData or { }
+			if property.name == "Energy Shield" or property.name == "Ward" or property.name == "Armour" or
+				property.name == "Evasion Rating" then
+				item.armourData = item.armourData or {}
 				for _, value in ipairs(property.values) do
-					item.armourData[property.name:gsub(" Rating", ""):gsub(" ", "")] = (item.armourData[property.name:gsub(" Rating", ""):gsub(" ", "")] or 0) + tonumber(value[1])
+					item.armourData[property.name:gsub(" Rating", ""):gsub(" ", "")] = (
+						item.armourData[property.name:gsub(" Rating", ""):gsub(" ", "")] or 0) + tonumber(value[1])
 				end
 			end
 		end
@@ -796,7 +940,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 	item.fractured = itemData.fractured
 	item.synthesised = itemData.synthesised
 	if itemData.sockets and itemData.sockets[1] then
-		item.sockets = { }
+		item.sockets = {}
 		for i, socket in pairs(itemData.sockets) do
 			item.sockets[i] = { group = socket.group, color = socket.sColour }
 		end
@@ -806,7 +950,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 	end
 	if itemData.requirements and (not itemData.socketedItems or not itemData.socketedItems[1]) then
 		-- Requirements cannot be trusted if there are socketed gems, as they may override the item's natural requirements
-		item.requirements = { }
+		item.requirements = {}
 		for _, req in ipairs(itemData.requirements) do
 			if req.name == "Level" then
 				item.requirements.level = req.values[1][1]
@@ -815,16 +959,16 @@ function ImportTabClass:ImportItem(itemData, slotName)
 			end
 		end
 	end
-	item.enchantModLines = { }
-	item.scourgeModLines = { }
-	item.classRequirementModLines = { }
-	item.implicitModLines = { }
-	item.explicitModLines = { }
+	item.enchantModLines = {}
+	item.scourgeModLines = {}
+	item.classRequirementModLines = {}
+	item.implicitModLines = {}
+	item.explicitModLines = {}
 	if itemData.enchantMods then
 		for _, line in ipairs(itemData.enchantMods) do
 			for line in line:gmatch("[^\n]+") do
 				local modList, extra = modLib.parseMod(line)
-				t_insert(item.enchantModLines, { line = line, extra = extra, mods = modList or { }, crafted = true })
+				t_insert(item.enchantModLines, { line = line, extra = extra, mods = modList or {}, crafted = true })
 			end
 		end
 	end
@@ -832,7 +976,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 		for _, line in ipairs(itemData.scourgeMods) do
 			for line in line:gmatch("[^\n]+") do
 				local modList, extra = modLib.parseMod(line)
-				t_insert(item.scourgeModLines, { line = line, extra = extra, mods = modList or { }, scourge = true })
+				t_insert(item.scourgeModLines, { line = line, extra = extra, mods = modList or {}, scourge = true })
 			end
 		end
 	end
@@ -840,7 +984,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 		for _, line in ipairs(itemData.implicitMods) do
 			for line in line:gmatch("[^\n]+") do
 				local modList, extra = modLib.parseMod(line)
-				t_insert(item.implicitModLines, { line = line, extra = extra, mods = modList or { } })
+				t_insert(item.implicitModLines, { line = line, extra = extra, mods = modList or {} })
 			end
 		end
 	end
@@ -848,7 +992,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 		for _, line in ipairs(itemData.fracturedMods) do
 			for line in line:gmatch("[^\n]+") do
 				local modList, extra = modLib.parseMod(line)
-				t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or { }, fractured = true })
+				t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or {}, fractured = true })
 			end
 		end
 	end
@@ -856,7 +1000,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 		for _, line in ipairs(itemData.explicitMods) do
 			for line in line:gmatch("[^\n]+") do
 				local modList, extra = modLib.parseMod(line)
-				t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or { } })
+				t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or {} })
 			end
 		end
 	end
@@ -864,7 +1008,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 		for _, line in ipairs(itemData.craftedMods) do
 			for line in line:gmatch("[^\n]+") do
 				local modList, extra = modLib.parseMod(line)
-				t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or { }, crafted = true })
+				t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or {}, crafted = true })
 			end
 		end
 	end
@@ -887,7 +1031,7 @@ function ImportTabClass:ImportItem(itemData, slotName)
 				-- If the line parses, then it should be included as an explicit mod
 				local modList, extra = modLib.parseMod(line)
 				if modList then
-					t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or { } })
+					t_insert(item.explicitModLines, { line = line, extra = extra, mods = modList or {} })
 				end
 			end
 		end
@@ -919,11 +1063,11 @@ end
 
 function ImportTabClass:ImportSocketedItems(item, socketedItems, slotName)
 	-- Build socket group list
-	local itemSocketGroupList = { }
+	local itemSocketGroupList = {}
 	local abyssalSocketId = 1
 	for _, socketedItem in ipairs(socketedItems) do
 		if socketedItem.abyssJewel then
-			self:ImportItem(socketedItem, slotName .. " Abyssal Socket "..abyssalSocketId)
+			self:ImportItem(socketedItem, slotName .. " Abyssal Socket " .. abyssalSocketId)
 			abyssalSocketId = abyssalSocketId + 1
 		else
 			local normalizedBasename, qualityType = self.build.skillsTab:GetBaseNameAndQuality(socketedItem.typeLine, nil)
@@ -931,8 +1075,9 @@ function ImportTabClass:ImportSocketedItems(item, socketedItems, slotName)
 			if not gemId and socketedItem.hybrid then
 				-- Dual skill gems (currently just Stormbind) show the second skill as the typeLine, which won't match the actual gem
 				-- Luckily the primary skill name is also there, so we can find the gem using that
-				normalizedBasename, qualityType  = self.build.skillsTab:GetBaseNameAndQuality(socketedItem.hybrid.baseTypeName, nil)
-				gemId = self.build.data.gemForBaseName[normalizedBasename]
+				normalizedBasename, qualityType = self.build.skillsTab:GetBaseNameAndQuality(
+						socketedItem.hybrid.baseTypeName, nil)
+				gemId                           = self.build.data.gemForBaseName[normalizedBasename]
 			end
 			if gemId then
 				local gemInstance = { level = 20, quality = 0, enabled = true, enableGlobal1 = true, gemId = gemId }
@@ -948,7 +1093,7 @@ function ImportTabClass:ImportSocketedItems(item, socketedItems, slotName)
 				end
 				local groupID = item.sockets[socketedItem.socket + 1].group
 				if not itemSocketGroupList[groupID] then
-					itemSocketGroupList[groupID] = { label = "", enabled = true, gemList = { }, slot = slotName }
+					itemSocketGroupList[groupID] = { label = "", enabled = true, gemList = {}, slot = slotName }
 				end
 				local socketGroup = itemSocketGroupList[groupID]
 				if not socketedItem.support and socketGroup.gemList[1] and socketGroup.gemList[1].support then
@@ -1021,11 +1166,11 @@ function UrlDecode(url)
 end
 
 function ImportTabClass:ProcessJSON(json)
-	local func, errMsg = loadstring("return "..jsonToLua(json))
+	local func, errMsg = loadstring("return " .. jsonToLua(json))
 	if errMsg then
 		return nil, errMsg
 	end
-	setfenv(func, { }) -- Sandbox the function just in case
+	setfenv(func, {}) -- Sandbox the function just in case
 	local data = func()
 	if type(data) ~= "table" then
 		return nil, "Return type is not a table"

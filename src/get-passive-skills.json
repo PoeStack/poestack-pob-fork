@@ -1,0 +1,1401 @@
+{
+	hashes={
+		[1]=662,
+		[2]=1203,
+		[3]=1346,
+		[4]=4367,
+		[5]=4397,
+		[6]=5296,
+		[7]=5743,
+		[8]=5935,
+		[9]=5972,
+		[10]=6712,
+		[11]=6799,
+		[12]=7388,
+		[13]=7444,
+		[14]=7960,
+		[15]=9261,
+		[16]=9392,
+		[17]=10635,
+		[18]=11420,
+		[19]=11730,
+		[20]=12143,
+		[21]=12439,
+		[22]=12783,
+		[23]=12888,
+		[24]=13009,
+		[25]=14151,
+		[26]=14936,
+		[27]=15117,
+		[28]=16123,
+		[29]=16790,
+		[30]=16954,
+		[31]=17735,
+		[32]=18174,
+		[33]=19501,
+		[34]=19635,
+		[35]=20528,
+		[36]=20987,
+		[37]=21033,
+		[38]=21460,
+		[39]=21958,
+		[40]=21974,
+		[41]=21984,
+		[42]=22618,
+		[43]=23027,
+		[44]=25831,
+		[45]=26196,
+		[46]=26270,
+		[47]=26866,
+		[48]=27564,
+		[49]=27575,
+		[50]=28859,
+		[51]=31875,
+		[52]=32241,
+		[53]=32816,
+		[54]=32932,
+		[55]=33310,
+		[56]=33755,
+		[57]=34098,
+		[58]=34171,
+		[59]=34173,
+		[60]=34723,
+		[61]=35233,
+		[62]=36107,
+		[63]=36226,
+		[64]=36452,
+		[65]=36634,
+		[66]=36678,
+		[67]=36949,
+		[68]=37486,
+		[69]=38246,
+		[70]=39790,
+		[71]=39836,
+		[72]=39841,
+		[73]=41472,
+		[74]=43988,
+		[75]=44184,
+		[76]=44723,
+		[77]=46842,
+		[78]=47197,
+		[79]=48214,
+		[80]=49254,
+		[81]=49605,
+		[82]=50826,
+		[83]=51213,
+		[84]=52502,
+		[85]=53279,
+		[86]=53493,
+		[87]=53884,
+		[88]=55571,
+		[89]=56075,
+		[90]=56158,
+		[91]=57222,
+		[92]=58218,
+		[93]=60170,
+		[94]=60398,
+		[95]=60440,
+		[96]=60472,
+		[97]=60989,
+		[98]=61419,
+		[99]=61471,
+		[100]=63039,
+		[101]=63194,
+		[102]=63398,
+		[103]=63447,
+		[104]=63965,
+		[105]=64210
+	},
+	["hashes_ex"]={
+		[1]=1,
+		[2]=3,
+		[3]=5,
+		[4]=7,
+		[5]=9,
+		[6]=12,
+		[7]=13,
+		[8]=15,
+		[9]=16,
+		[10]=18,
+		[11]=19,
+		[12]=20,
+		[13]=30,
+		[14]=32,
+		[15]=33,
+		[16]=34,
+		[17]=36,
+		[18]=37,
+		[19]=38,
+		[20]=198,
+		[21]=200,
+		[22]=202,
+		[23]=204,
+		[24]=206
+	},
+	items={
+		[1]={
+			baseType="Medium Cluster Jewel",
+			descrText="Place into an allocated Medium or Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.",
+			enchantMods={
+				[1]="Adds 4 Passive Skills",
+				[2]="1 Added Passive Skill is a Jewel Socket",
+				[3]="Added Small Passive Skills grant: 10% increased Area Damage"
+			},
+			explicitMods={
+				[1]="Added Small Passive Skills also grant: 1% increased Area of Effect",
+				[2]="Added Small Passive Skills also grant: +6% to Lightning Resistance",
+				[3]="1 Added Passive Skill is Towering Threat",
+				[4]="1 Added Passive Skill is Vast Power"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL05ld0dlbUJhc2UyIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/78f6bf8356/NewGemBase2.png",
+			id="74cd0824697d180de90d1460fcc0b6bf1e5dd05c9611e70d827ef6cae6177fbb",
+			identified=true,
+			ilvl=84,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Vivid Essence",
+			requirements={
+				[1]={
+					displayMode=0,
+					name="Level",
+					type=62,
+					values={
+						[1]={
+							[1]="67",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Medium Cluster Jewel",
+			verified=false,
+			w=1,
+			x=21,
+			y=0
+		},
+		[2]={
+			baseType="Small Cluster Jewel",
+			descrText="Place into an allocated Small, Medium or Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.",
+			enchantMods={
+				[1]="Adds 3 Passive Skills",
+				[2]="Added Small Passive Skills grant: 6% increased Mana Reservation Efficiency of Skills"
+			},
+			explicitMods={
+				[1]="Added Small Passive Skills also grant: +6 to Dexterity",
+				[2]="Added Small Passive Skills also grant: +5% to all Elemental Resistances",
+				[3]="Added Small Passive Skills have 25% increased Effect",
+				[4]="1 Added Passive Skill is Uncompromising"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL05ld0dlbUJhc2UxIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/0eb1a9d981/NewGemBase1.png",
+			id="8e41177559ef5daf7723e14cc2bc230877baef6b5af71bbbb7c12d777ca47685",
+			identified=true,
+			ilvl=79,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Behemoth Stone",
+			requirements={
+				[1]={
+					displayMode=0,
+					name="Level",
+					type=62,
+					values={
+						[1]={
+							[1]="62",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Small Cluster Jewel",
+			verified=false,
+			w=1,
+			x=26,
+			y=0
+		},
+		[3]={
+			baseType="Cobalt Jewel",
+			descrText="Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+			explicitMods={
+				[1]="7% increased maximum Life",
+				[2]="5% reduced Mana Cost of Skills",
+				[3]="3% increased Mana Reservation Efficiency of Skills"
+			},
+			fractured=true,
+			fracturedMods={
+				[1]="+14% to Critical Strike Multiplier for Spell Damage"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL2Jhc2ljaW50IiwidyI6MSwiaCI6MSwic2NhbGUiOjEsImZyYWN0dXJlZCI6dHJ1ZX1d/b470123709/basicint.png",
+			id="7d49a352a504139a8ebe72ee3c4b592466dbc0c30e753f0122bb5d6836fddec3",
+			identified=true,
+			ilvl=82,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Soul Hope",
+			typeLine="Cobalt Jewel",
+			verified=false,
+			w=1,
+			x=53,
+			y=0
+		},
+		[4]={
+			baseType="Cobalt Jewel",
+			descrText="Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+			explicitMods={
+				[1]="+15% to all Elemental Resistances",
+				[2]="6% chance to deal Double Damage if you've cast Vulnerability in the past 10 seconds",
+				[3]="Gain 39% of Physical Damage as a Random Element if you've cast Elemental Weakness in the past 10 seconds"
+			},
+			flavourText={
+				[1]="Fellshrine stood as a holy bastion opposite the",
+				[2]="Chamber of Sins, and all that it represented.",
+				[3]="For one to rise, the other must fall."
+			},
+			frameType=3,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL3VuaXF1ZTE5IiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/72dbd8bd3d/unique19.png",
+			id="971e1d38dcbe69db602884c92153a749430d4ddab246fdb430ea98ed7f9e57ed",
+			identified=true,
+			ilvl=84,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="The Balance of Terror",
+			properties={
+				[1]={
+					displayMode=0,
+					name="Limited to",
+					values={
+						[1]={
+							[1]="1",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Cobalt Jewel",
+			verified=false,
+			w=1,
+			x=51,
+			y=0
+		},
+		[5]={
+			baseType="Cobalt Jewel",
+			corrupted=true,
+			descrText="Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+			explicitMods={
+				[1]="+8 to Strength and Dexterity",
+				[2]="15% increased Global Physical Damage",
+				[3]="+15% to Critical Strike Multiplier for Spell Damage",
+				[4]="7% increased maximum Life"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL2Jhc2ljaW50IiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/510013aec2/basicint.png",
+			id="72fca2431fd8a31058baa1df74ce7d1515d1fd8ba3c186a0e6dd5a3c98117c9d",
+			identified=true,
+			ilvl=85,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Cataclysm Dew",
+			typeLine="Cobalt Jewel",
+			verified=false,
+			w=1,
+			x=18,
+			y=0
+		},
+		[6]={
+			baseType="Large Cluster Jewel",
+			descrText="Place into an allocated Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.",
+			enchantMods={
+				[1]="Adds 8 Passive Skills",
+				[2]="2 Added Passive Skills are Jewel Sockets",
+				[3]="Added Small Passive Skills grant: 10% increased Spell Damage"
+			},
+			explicitMods={
+				[1]="Added Small Passive Skills also grant: +4% to Lightning Resistance",
+				[2]="1 Added Passive Skill is Burden Projection",
+				[3]="1 Added Passive Skill is Essence Rush",
+				[4]="1 Added Passive Skill is Practiced Caster"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL05ld0dlbUJhc2UzIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/db35e60885/NewGemBase3.png",
+			id="75d721a1a0e433d571bf11ff2d08b178403ac0066b2a96064537caf56512169f",
+			identified=true,
+			ilvl=77,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Cataclysm Vessel",
+			requirements={
+				[1]={
+					displayMode=0,
+					name="Level",
+					type=62,
+					values={
+						[1]={
+							[1]="54",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Large Cluster Jewel",
+			verified=false,
+			w=1,
+			x=20,
+			y=0
+		},
+		[7]={
+			baseType="Timeless Jewel",
+			descrText="Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+			explicitMods={
+				[1]="Carved to glorify 2568 new faithful converted by High Templar Dominus\nPassives in radius are Conquered by the Templars",
+				[2]="+2% to all Elemental Resistances per 10 Devotion",
+				[3]="1% increased effect of Non-Curse Auras per 10 Devotion",
+				[4]="Historic"
+			},
+			flavourText={
+				[1]="They believed themselves the utmost faithful, but that conviction became oppression."
+			},
+			frameType=3,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL1RlbXBsYXJDaXZpbGl6YXRpb24iLCJ3IjoxLCJoIjoxLCJzY2FsZSI6MX1d/09ecf8ac86/TemplarCivilization.png",
+			id="fcf577407b6bc1540d1ee5a36a69530892f130c3688decb4a0b156b79d2076e9",
+			identified=true,
+			ilvl=86,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Militant Faith",
+			properties={
+				[1]={
+					displayMode=0,
+					name="Limited to",
+					values={
+						[1]={
+							[1]="1 Historic",
+							[2]=0
+						}
+					}
+				},
+				[2]={
+					displayMode=0,
+					name="Radius",
+					type=26,
+					values={
+						[1]={
+							[1]="Large",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Timeless Jewel",
+			verified=false,
+			w=1,
+			x=14,
+			y=0
+		},
+		[8]={
+			baseType="Medium Cluster Jewel",
+			descrText="Place into an allocated Medium or Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.",
+			enchantMods={
+				[1]="Adds 5 Passive Skills",
+				[2]="1 Added Passive Skill is a Jewel Socket",
+				[3]="Added Small Passive Skills grant: 10% increased Damage while affected by a Herald"
+			},
+			explicitMods={
+				[1]="Added Small Passive Skills also grant: +4 to Dexterity",
+				[2]="Added Small Passive Skills also grant: 4% increased Mana Regeneration Rate",
+				[3]="1 Added Passive Skill is Empowered Envoy",
+				[4]="1 Added Passive Skill is Purposeful Harbinger"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL05ld0dlbUJhc2UyIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/78f6bf8356/NewGemBase2.png",
+			id="9af72986cfc995d6180b86140a047122173975af9c9071dd0208194a93a84f07",
+			identified=true,
+			ilvl=78,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Brood Eye",
+			requirements={
+				[1]={
+					displayMode=0,
+					name="Level",
+					type=62,
+					values={
+						[1]={
+							[1]="60",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Medium Cluster Jewel",
+			verified=false,
+			w=1,
+			x=23,
+			y=0
+		},
+		[9]={
+			baseType="Viridian Jewel",
+			corrupted=true,
+			descrText="Place into an allocated Jewel Socket on the Passive Skill Tree. Right click to remove from the Socket.",
+			explicitMods={
+				[1]="Passives in Radius of Supreme Ego can be Allocated\nwithout being connected to your tree"
+			},
+			flavourText={
+				[1]="She was the last of countless progeny bred to test the limits of limitless power.",
+				[2]="In the cosmic prison of her birth, her siblings fought each other to the death",
+				[3]="for supremacy. She alone reached her limit... and broke through."
+			},
+			frameType=3,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL01pbmRib3JlUGVhcmwiLCJ3IjoxLCJoIjoxLCJzY2FsZSI6MX1d/367683a1bb/MindborePearl.png",
+			id="5ef80c1f1440f6bd82ecb1dae76f29b1071553103751f9c2498109df4ec1977b",
+			identified=true,
+			ilvl=87,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Impossible Escape",
+			properties={
+				[1]={
+					displayMode=0,
+					name="Limited to",
+					values={
+						[1]={
+							[1]="1",
+							[2]=0
+						}
+					}
+				},
+				[2]={
+					displayMode=0,
+					name="Radius",
+					type=24,
+					values={
+						[1]={
+							[1]="Small",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Viridian Jewel",
+			verified=false,
+			w=1,
+			x=1,
+			y=0
+		},
+		[10]={
+			baseType="Small Cluster Jewel",
+			descrText="Place into an allocated Small, Medium or Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.",
+			enchantMods={
+				[1]="Adds 3 Passive Skills",
+				[2]="Added Small Passive Skills grant: 6% increased Mana Reservation Efficiency of Skills"
+			},
+			explicitMods={
+				[1]="Added Small Passive Skills also grant: +7 to Dexterity",
+				[2]="Added Small Passive Skills also grant: +9% to Lightning Resistance",
+				[3]="Added Small Passive Skills have 25% increased Effect",
+				[4]="1 Added Passive Skill is Purposeful Harbinger"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL05ld0dlbUJhc2UxIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/0eb1a9d981/NewGemBase1.png",
+			id="077f58e67d2c37e8f1bbca4331f385254e189345546149b267f5852b3c5a900f",
+			identified=true,
+			ilvl=83,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Dusk Solace",
+			requirements={
+				[1]={
+					displayMode=0,
+					name="Level",
+					type=62,
+					values={
+						[1]={
+							[1]="62",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Small Cluster Jewel",
+			verified=false,
+			w=1,
+			x=24,
+			y=0
+		},
+		[11]={
+			baseType="Large Cluster Jewel",
+			descrText="Place into an allocated Large Jewel Socket on the Passive Skill Tree. Added passives do not interact with jewel radiuses. Right click to remove from the Socket.",
+			enchantMods={
+				[1]="Adds 8 Passive Skills",
+				[2]="2 Added Passive Skills are Jewel Sockets",
+				[3]="Added Small Passive Skills grant: 12% increased Cold Damage"
+			},
+			explicitMods={
+				[1]="Added Small Passive Skills also grant: +5 to Strength",
+				[2]="1 Added Passive Skill is Blast-Freeze",
+				[3]="1 Added Passive Skill is Doryani's Lesson",
+				[4]="1 Added Passive Skill is Prismatic Heart"
+			},
+			frameType=2,
+			h=1,
+			icon="https://web.poecdn.com/gen/image/WzI1LDE0LHsiZiI6IjJESXRlbXMvSmV3ZWxzL05ld0dlbUJhc2UzIiwidyI6MSwiaCI6MSwic2NhbGUiOjF9XQ/db35e60885/NewGemBase3.png",
+			id="74331f551509c26acf36954b802032c4bd06722126cabb9796faf0e2b8372f96",
+			identified=true,
+			ilvl=83,
+			inventoryId="PassiveJewels",
+			league="Sanctum",
+			name="Fulgent Bliss",
+			requirements={
+				[1]={
+					displayMode=0,
+					name="Level",
+					type=62,
+					values={
+						[1]={
+							[1]="54",
+							[2]=0
+						}
+					}
+				}
+			},
+			typeLine="Large Cluster Jewel",
+			verified=false,
+			w=1,
+			x=11,
+			y=0
+		}
+	},
+	["jewel_data"]={
+		[1]={
+			radius=960,
+			type="JewelDex"
+		},
+		[11]={
+			subgraph={
+				groups={
+					["expansion_11"]={
+						nodes={
+							[1]="5",
+							[2]="7",
+							[3]="9",
+							[4]="10",
+							[5]="11",
+							[6]="0",
+							[7]="1",
+							[8]="3",
+							[9]="1000"
+						},
+						orbits={
+							[0]=3
+						},
+						proxy="43989",
+						x=-4708.05,
+						y=-8281.17
+					}
+				},
+				nodes={
+					[0]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/ColdDamagenode.png",
+						in={
+							[1]="11"
+						},
+						name="Cold Damage",
+						orbit=3,
+						orbitIndex=0,
+						out={
+						},
+						skill="41355",
+						stats={
+							[1]="12% increased Cold Damage",
+							[2]="+5 to Strength"
+						}
+					},
+					[1]={
+						expansionJewel={
+							index=2,
+							parent="7960",
+							proxy="13201",
+							size=1
+						},
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/MasteryBlank.png",
+						in={
+							[1]="0"
+						},
+						isJewelSocket=true,
+						name="Medium Jewel Socket",
+						orbit=3,
+						orbitIndex=1,
+						out={
+						},
+						skill="9408",
+						stats={
+						}
+					},
+					[3]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedNonDamageAilmentNotable.png",
+						in={
+							[1]="1"
+						},
+						isNotable=true,
+						name="Blast-Freeze",
+						orbit=3,
+						orbitIndex=4,
+						out={
+						},
+						skill="39874",
+						stats={
+							[1]="20% increased Cold Damage",
+							[2]="Freezes you inflict spread to other Enemies within a Radius of 12"
+						}
+					},
+					[5]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/ColdDamagenode.png",
+						in={
+							[1]="7960"
+						},
+						name="Cold Damage",
+						orbit=3,
+						orbitIndex=7,
+						out={
+						},
+						skill="41355",
+						stats={
+							[1]="12% increased Cold Damage",
+							[2]="+5 to Strength"
+						}
+					},
+					[7]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedElementalDamage.png",
+						in={
+							[1]="5"
+						},
+						isNotable=true,
+						name="Doryani's Lesson",
+						orbit=3,
+						orbitIndex=9,
+						out={
+						},
+						reminderText={
+							[1]="(Leeched Life is recovered over time. Multiple Leeches can occur simultaneously, up to a maximum rate)"
+						},
+						skill="7039",
+						stats={
+							[1]="0.2% of Elemental Damage Leeched as Life",
+							[2]="25% increased Elemental Damage"
+						}
+					},
+					[9]={
+						expansionJewel={
+							index=0,
+							parent="7960",
+							proxy="55706",
+							size=1
+						},
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/MasteryBlank.png",
+						in={
+							[1]="7"
+						},
+						isJewelSocket=true,
+						name="Medium Jewel Socket",
+						orbit=3,
+						orbitIndex=12,
+						out={
+						},
+						skill="29712",
+						stats={
+						}
+					},
+					[10]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/ColdDamagenode.png",
+						in={
+							[1]="9"
+						},
+						name="Cold Damage",
+						orbit=3,
+						orbitIndex=13,
+						out={
+						},
+						skill="41355",
+						stats={
+							[1]="12% increased Cold Damage",
+							[2]="+5 to Strength"
+						}
+					},
+					[11]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedElementalDamage.png",
+						in={
+							[1]="10"
+						},
+						isNotable=true,
+						name="Prismatic Heart",
+						orbit=3,
+						orbitIndex=15,
+						out={
+						},
+						skill="17050",
+						stats={
+							[1]="+10% to all Elemental Resistances",
+							[2]="30% increased Elemental Damage"
+						}
+					},
+					[1000]={
+						group="expansion_11",
+						icon="Art/2DArt/SkillIcons/passives/AltMasteryGroupCold.png",
+						in={
+						},
+						isMastery=true,
+						name="Cold Damage Mastery",
+						orbit=0,
+						orbitIndex=0,
+						out={
+						},
+						skill="37977",
+						stats={
+						}
+					}
+				}
+			},
+			type="JewelPassiveTreeExpansionLarge"
+		},
+		[14]={
+			radius=1800,
+			radiusVisual="Templar",
+			type="JewelTimeless"
+		},
+		[18]={
+			type="JewelInt"
+		},
+		[20]={
+			subgraph={
+				groups={
+					["expansion_20"]={
+						nodes={
+							[1]="202",
+							[2]="204",
+							[3]="206",
+							[4]="195",
+							[5]="196",
+							[6]="197",
+							[7]="198",
+							[8]="200",
+							[9]="1195"
+						},
+						orbits={
+							[0]=3
+						},
+						proxy="18756",
+						x=4887.73,
+						y=-8158.76
+					}
+				},
+				nodes={
+					[195]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedSpellDamageNode.png",
+						in={
+							[1]="206"
+						},
+						name="Spell Damage",
+						orbit=3,
+						orbitIndex=0,
+						out={
+						},
+						skill="21845",
+						stats={
+							[1]="10% increased Spell Damage",
+							[2]="+4% to Lightning Resistance"
+						}
+					},
+					[196]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedSpellDamageNotable.png",
+						in={
+							[1]="195"
+						},
+						isNotable=true,
+						name="Burden Projection",
+						orbit=3,
+						orbitIndex=1,
+						out={
+						},
+						skill="5190",
+						stats={
+							[1]="30% increased Spell Damage",
+							[2]="8% chance to Knock Enemies Back on Hit with Spell Damage"
+						}
+					},
+					[197]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedSpellDamageNode.png",
+						in={
+							[1]="196"
+						},
+						name="Spell Damage",
+						orbit=3,
+						orbitIndex=3,
+						out={
+						},
+						skill="21845",
+						stats={
+							[1]="10% increased Spell Damage",
+							[2]="+4% to Lightning Resistance"
+						}
+					},
+					[198]={
+						expansionJewel={
+							index=2,
+							parent="21984",
+							proxy="24452",
+							size=1
+						},
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/MasteryBlank.png",
+						in={
+							[1]="197"
+						},
+						isJewelSocket=true,
+						name="Medium Jewel Socket",
+						orbit=3,
+						orbitIndex=4,
+						out={
+						},
+						skill="13170",
+						stats={
+						}
+					},
+					[200]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedSpellDamageNotable.png",
+						in={
+							[1]="198"
+						},
+						isNotable=true,
+						name="Essence Rush",
+						orbit=3,
+						orbitIndex=7,
+						out={
+						},
+						reminderText={
+							[1]="(Leeched Energy Shield is recovered over time. Multiple Leeches can occur simultaneously, up to a maximum rate)"
+						},
+						skill="32415",
+						stats={
+							[1]="40% increased Damage while Leeching Energy Shield",
+							[2]="0.3% of Spell Damage Leeched as Energy Shield",
+							[3]="5% increased Attack and Cast Speed while Leeching Energy Shield"
+						}
+					},
+					[202]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedSpellDamageNode.png",
+						in={
+							[1]="21984"
+						},
+						name="Spell Damage",
+						orbit=3,
+						orbitIndex=9,
+						out={
+						},
+						skill="21845",
+						stats={
+							[1]="10% increased Spell Damage",
+							[2]="+4% to Lightning Resistance"
+						}
+					},
+					[204]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/IncreasedSpellDamageNotable.png",
+						in={
+							[1]="202"
+						},
+						isNotable=true,
+						name="Practiced Caster",
+						orbit=3,
+						orbitIndex=12,
+						out={
+						},
+						skill="34205",
+						stats={
+							[1]="20% increased Spell Damage",
+							[2]="5% increased Cast Speed",
+							[3]="35% chance to Avoid interruption from Stuns while Casting"
+						}
+					},
+					[206]={
+						expansionJewel={
+							index=0,
+							parent="21984",
+							proxy="58194",
+							size=1
+						},
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/MasteryBlank.png",
+						in={
+							[1]="204"
+						},
+						isJewelSocket=true,
+						name="Medium Jewel Socket",
+						orbit=3,
+						orbitIndex=15,
+						out={
+						},
+						skill="64583",
+						stats={
+						}
+					},
+					[1195]={
+						group="expansion_20",
+						icon="Art/2DArt/SkillIcons/passives/AltMasteryGroupCast.png",
+						in={
+						},
+						isMastery=true,
+						name="Spell Damage Mastery",
+						orbit=0,
+						orbitIndex=0,
+						out={
+						},
+						skill="21841",
+						stats={
+						}
+					}
+				}
+			},
+			type="JewelPassiveTreeExpansionLarge"
+		},
+		[21]={
+			subgraph={
+				groups={
+					["expansion_21"]={
+						nodes={
+							[1]="13",
+							[2]="15",
+							[3]="16",
+							[4]="12",
+							[5]="1012"
+						},
+						orbits={
+							[0]=2
+						},
+						proxy="55706",
+						x=-5519.05,
+						y=-8281.17
+					}
+				},
+				nodes={
+					[12]={
+						group="expansion_21",
+						icon="Art/2DArt/SkillIcons/passives/AreaDmgNotable.png",
+						in={
+							[1]="16"
+						},
+						isNotable=true,
+						name="Towering Threat",
+						orbit=2,
+						orbitIndex=0,
+						out={
+						},
+						skill="63607",
+						stats={
+							[1]="8% increased maximum Life",
+							[2]="10% increased Area of Effect"
+						}
+					},
+					[13]={
+						group="expansion_21",
+						icon="Art/2DArt/SkillIcons/passives/AreaDmgNode.png",
+						in={
+							[1]="29712"
+						},
+						name="Area Damage",
+						orbit=2,
+						orbitIndex=4,
+						out={
+						},
+						skill="44483",
+						stats={
+							[1]="+6% to Lightning Resistance",
+							[2]="1% increased Area of Effect",
+							[3]="10% increased Area Damage"
+						}
+					},
+					[15]={
+						group="expansion_21",
+						icon="Art/2DArt/SkillIcons/passives/AreaDmgNotable.png",
+						in={
+							[1]="13"
+						},
+						isNotable=true,
+						name="Vast Power",
+						orbit=2,
+						orbitIndex=8,
+						out={
+						},
+						skill="63969",
+						stats={
+							[1]="20% increased Area Damage",
+							[2]="3% increased Area of Effect per Power Charge, up to a maximum of 50%"
+						}
+					},
+					[16]={
+						expansionJewel={
+							index=0,
+							parent="29712",
+							proxy="40114",
+							size=0
+						},
+						group="expansion_21",
+						icon="Art/2DArt/SkillIcons/passives/MasteryBlank.png",
+						in={
+							[1]="15"
+						},
+						isJewelSocket=true,
+						name="Small Jewel Socket",
+						orbit=2,
+						orbitIndex=12,
+						out={
+						},
+						skill="12613",
+						stats={
+						}
+					},
+					[1012]={
+						group="expansion_21",
+						icon="Art/2DArt/SkillIcons/passives/AltAreaDamageMastery.png",
+						in={
+						},
+						isMastery=true,
+						name="Area Damage Mastery",
+						orbit=0,
+						orbitIndex=0,
+						out={
+						},
+						skill="63454",
+						stats={
+						}
+					}
+				}
+			},
+			type="JewelPassiveTreeExpansionMedium"
+		},
+		[23]={
+			subgraph={
+				groups={
+					["expansion_23"]={
+						nodes={
+							[1]="33",
+							[2]="34",
+							[3]="30",
+							[4]="31",
+							[5]="32",
+							[6]="1030"
+						},
+						orbits={
+							[0]=2
+						},
+						proxy="13201",
+						x=-4302.55,
+						y=-8983.51
+					}
+				},
+				nodes={
+					[30]={
+						expansionJewel={
+							index=0,
+							parent="9408",
+							proxy="7956",
+							size=0
+						},
+						group="expansion_23",
+						icon="Art/2DArt/SkillIcons/passives/MasteryBlank.png",
+						in={
+							[1]="34"
+						},
+						isJewelSocket=true,
+						name="Small Jewel Socket",
+						orbit=2,
+						orbitIndex=1,
+						out={
+						},
+						skill="2311",
+						stats={
+						}
+					},
+					[31]={
+						group="expansion_23",
+						icon="Art/2DArt/SkillIcons/passives/DmgHeraldSkillsNode.png",
+						in={
+							[1]="30"
+						},
+						name="Damage while you have a Herald",
+						orbit=2,
+						orbitIndex=4,
+						out={
+						},
+						skill="17198",
+						stats={
+							[1]="4% increased Mana Regeneration Rate",
+							[2]="10% increased Damage while affected by a Herald",
+							[3]="+4 to Dexterity"
+						}
+					},
+					[32]={
+						group="expansion_23",
+						icon="Art/2DArt/SkillIcons/passives/DmgHeraldSkillsNotable.png",
+						in={
+							[1]="31"
+						},
+						isNotable=true,
+						name="Empowered Envoy",
+						orbit=2,
+						orbitIndex=7,
+						out={
+						},
+						skill="17066",
+						stats={
+							[1]="Herald Skills deal 40% increased Damage",
+							[2]="20% increased Effect of Herald Buffs on you"
+						}
+					},
+					[33]={
+						group="expansion_23",
+						icon="Art/2DArt/SkillIcons/passives/DmgHeraldSkillsNode.png",
+						in={
+							[1]="9408"
+						},
+						name="Damage while you have a Herald",
+						orbit=2,
+						orbitIndex=9,
+						out={
+						},
+						skill="17198",
+						stats={
+							[1]="4% increased Mana Regeneration Rate",
+							[2]="10% increased Damage while affected by a Herald",
+							[3]="+4 to Dexterity"
+						}
+					},
+					[34]={
+						group="expansion_23",
+						icon="Art/2DArt/SkillIcons/passives/AuraEffectNotable.png",
+						in={
+							[1]="33"
+						},
+						isNotable=true,
+						name="Purposeful Harbinger",
+						orbit=2,
+						orbitIndex=12,
+						out={
+						},
+						skill="51870",
+						stats={
+							[1]="Auras from your Skills have 8% increased Effect on you for\neach Herald affecting you, up to 40%"
+						}
+					},
+					[1030]={
+						group="expansion_23",
+						icon="Art/2DArt/SkillIcons/passives/AltDamageWithHeraldMastery.png",
+						in={
+						},
+						isMastery=true,
+						name="Damage while you have a Herald Mastery",
+						orbit=0,
+						orbitIndex=0,
+						out={
+						},
+						skill="33431",
+						stats={
+						}
+					}
+				}
+			},
+			type="JewelPassiveTreeExpansionMedium"
+		},
+		[24]={
+			subgraph={
+				groups={
+					["expansion_24"]={
+						nodes={
+							[1]="18",
+							[2]="19",
+							[3]="20"
+						},
+						orbits={
+							[0]=1
+						},
+						proxy="40114",
+						x=-6066.06,
+						y=-8240.17
+					}
+				},
+				nodes={
+					[18]={
+						group="expansion_24",
+						icon="Art/2DArt/SkillIcons/passives/AuraEffectNode.png",
+						in={
+							[1]="12613"
+						},
+						name="Reservation Efficiency",
+						orbit=1,
+						orbitIndex=1,
+						out={
+						},
+						skill="21796",
+						stats={
+							[1]="+11% to Lightning Resistance",
+							[2]="7% increased Mana Reservation Efficiency of Skills",
+							[3]="+8 to Dexterity"
+						}
+					},
+					[19]={
+						group="expansion_24",
+						icon="Art/2DArt/SkillIcons/passives/AuraEffectNode.png",
+						in={
+							[1]="18"
+						},
+						name="Reservation Efficiency",
+						orbit=1,
+						orbitIndex=3,
+						out={
+						},
+						skill="21796",
+						stats={
+							[1]="+11% to Lightning Resistance",
+							[2]="7% increased Mana Reservation Efficiency of Skills",
+							[3]="+8 to Dexterity"
+						}
+					},
+					[20]={
+						group="expansion_24",
+						icon="Art/2DArt/SkillIcons/passives/AuraEffectNotable.png",
+						in={
+							[1]="19"
+						},
+						isNotable=true,
+						name="Purposeful Harbinger",
+						orbit=1,
+						orbitIndex=5,
+						out={
+						},
+						skill="51870",
+						stats={
+							[1]="Auras from your Skills have 8% increased Effect on you for\neach Herald affecting you, up to 40%"
+						}
+					}
+				}
+			},
+			type="JewelPassiveTreeExpansionSmall"
+		},
+		[26]={
+			subgraph={
+				groups={
+					["expansion_26"]={
+						nodes={
+							[1]="37",
+							[2]="38",
+							[3]="36"
+						},
+						orbits={
+							[0]=1
+						},
+						proxy="7956",
+						x=-4064.55,
+						y=-9477.75
+					}
+				},
+				nodes={
+					[36]={
+						group="expansion_26",
+						icon="Art/2DArt/SkillIcons/passives/ArmourNotable.png",
+						in={
+							[1]="38"
+						},
+						isNotable=true,
+						name="Uncompromising",
+						orbit=1,
+						orbitIndex=1,
+						out={
+						},
+						reminderText={
+							[1]="(The Stun Threshold determines how much Damage can Stun something)"
+						},
+						skill="21907",
+						stats={
+							[1]="20% increased Stun Threshold",
+							[2]="Determination has 50% increased Mana Reservation Efficiency"
+						}
+					},
+					[37]={
+						group="expansion_26",
+						icon="Art/2DArt/SkillIcons/passives/AuraEffectNode.png",
+						in={
+							[1]="2311"
+						},
+						name="Reservation Efficiency",
+						orbit=1,
+						orbitIndex=3,
+						out={
+						},
+						skill="21796",
+						stats={
+							[1]="+6% to all Elemental Resistances",
+							[2]="7% increased Mana Reservation Efficiency of Skills",
+							[3]="+7 to Dexterity"
+						}
+					},
+					[38]={
+						group="expansion_26",
+						icon="Art/2DArt/SkillIcons/passives/AuraEffectNode.png",
+						in={
+							[1]="37"
+						},
+						name="Reservation Efficiency",
+						orbit=1,
+						orbitIndex=5,
+						out={
+						},
+						skill="21796",
+						stats={
+							[1]="+6% to all Elemental Resistances",
+							[2]="7% increased Mana Reservation Efficiency of Skills",
+							[3]="+7 to Dexterity"
+						}
+					}
+				}
+			},
+			type="JewelPassiveTreeExpansionSmall"
+		},
+		[51]={
+			type="JewelInt"
+		},
+		[53]={
+			type="JewelInt"
+		}
+	},
+	["mastery_effects"]={
+		[16123]=9986,
+		[32241]=31822,
+		[34723]=40307,
+		[39836]=28638,
+		[47197]=61097,
+		[60170]=13267
+	}
+}
