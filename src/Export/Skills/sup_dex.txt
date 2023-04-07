@@ -55,6 +55,14 @@ local skills, mod, flag, skill = ...
 #mods
 
 #skill SupportBlockReduction
+	statMap = {
+		["global_reduce_enemy_block_%"] = {
+			mod("reduceEnemyBlock", "BASE", nil, 0, 0)
+		},
+		["support_reduce_enemy_block_and_spell_block_%"] = {
+			mod("reduceEnemyBlock", "BASE", nil, 0, 0)
+		},
+	},
 #mods
 
 #skill SupportCastOnCrit
@@ -367,14 +375,6 @@ local skills, mod, flag, skill = ...
 #baseMod flag("Condition:CanBeElusive", { type = "GlobalEffect", effectType = "Buff" })
 #mods
 
-#skill SupportOnslaught
-	statMap = {
-		["attack_and_cast_speed_+%_during_onslaught"] = {
-			mod("Speed", "INC", nil, 0, 0, {type = "Condition", var = "Onslaught"})
-		}
-	},
-#mods
-
 #skill SupportPierce
 	statMap = {
 		["support_pierce_projectile_damage_+%_final"] = {
@@ -537,4 +537,10 @@ local skills, mod, flag, skill = ...
 #mods
 
 #skill SupportChaosAttacks
+#mods
+
+#skill SupportManaforgedArrows
+#mods
+
+#skill SupportMomentum
 #mods
